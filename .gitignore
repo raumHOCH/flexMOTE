@@ -1,0 +1,7 @@
+.DS_Store
+.project
+.settings
+.esproj
+__MACOSX
+!.gitkeep
+!.empty
