@@ -1,16 +1,34 @@
 ;(function() {
     "use strict";
 
-    /**
-     * toggle applications sidebar
-     */
+    // tooltips for top nav
+    $('.top.menu i.icon').parent().popup();
+
+    // left sidebar (applications)
+    $('.ui.sidebar.menu .item').on('click', function(event) {
+        if ($(this).hasClass('dividing')) {
+            return false;
+        }
+        $(this).parent().find('.item').removeClass('active');
+        $(this).addClass('active');
+        $('.ui.button.applications span').html($(this).find('span').html());
+        $('.item.server span').html($(this).find('em').html());
+    });
+    $('.ui.sidebar.menu .item:eq(1)').trigger('click');
+
+    // main buttons
     $('.ui.button.applications').on('click', function(event) {
-        $('.ui.sidebar').sidebar({
-            context: $('.segment.pushable'),
+        $('.ui.sidebar.left').sidebar({
+            dimPage: false
+        }).sidebar('toggle');
+    });
+    $('.ui.button.settings').on('click', function(event) {
+        $('.ui.sidebar.right').sidebar({
             dimPage: false
         }).sidebar('toggle');
     });
 
+    // ----- charting ----------------------------------------------------------
     /**
      * first chart
      */

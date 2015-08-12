@@ -7,8 +7,10 @@
         <link rel="stylesheet" href="/lib/semantic.min.css" />
         <link rel="stylesheet" href="/css/monitoring.css" />
     </head>
-    <body>
-        <!-- main menu -->
+
+    <body class="pushable">
+
+        <!-- top navbar -->
         <div class="ui top fixed inverted menu">
             <div class="item">
                 <a class="ui logo icon image" href="/">
@@ -19,586 +21,691 @@
             <div class="item">
                 <h1>Monitoring</h1>
             </div>
-            
-            <div class="item">
-                Connected to https://remote.io/huetchenspiel
+
+            <div class="item" data-content="Monitored Server">
+                <i class="server icon"></i>
+                https://remote.io
+            </div>
+
+            <div class="item" data-content="Connected Users">
+                <i class="users icon"></i>
+                2.341
+            </div>
+
+            <div class="item" data-content="Throughput">
+                <i class="exchange icon"></i>
+                56.31MB/s
+            </div>
+
+            <div class="item" data-content="Average Latency">
+                <i class="wait icon"></i>
+                150ms
+            </div>
+
+            <div class="item" data-content"Amount Or Errors">
+                <i class="orange warning sign icon"></i>
+                3
             </div>
 
             <div class="right menu">
-                <a class="item">Impressum</a>
-                <a class="item">Login</a>
+                <a class="item">Support</a>
+
+                <div class="item">
+                    Logged in as &nbsp; <strong>c.david</strong>
+                </div>
             </div>
         </div>
 
-        <!-- content layer -->
-        <div class="ui bottom attached segment pushable">
-            <div class="ui simple sidebar left">
-                <br />
-                <br />
-                <br />
+        <!-- left sidebar (applications) -->
+        <div class="ui simple fixed vertical menu sidebar left">
+            <div class="item dividing">
+                <h2>Applications</h2>
+            </div>
 
-                <div class="ui vertical fluid tabular menu">
-                    <div class="item">
-                        <div class="ui icon input">
-                            <input placeholder="Search..." type="text">
-                            <i class="search icon"></i>
+            <div class="active item">
+                <span>Hütchenspiel - Weber (live)</span>
+                <br />
+                <em>weber.cloudfolio.com</em>
+            </div>
+
+            <div class="item">
+                <span>Hütchenspiel (nightly)</span>
+                <br />
+                <em>nightly.cloudfolio.com</em>
+            </div>
+
+            <div class="item">
+                <span>Face Wall (local)</span>
+                <br />
+                <em>192.168.0.12</em>
+            </div>
+
+            <div class="item">
+                <span>Face Wall - Wall AG (live)</span>
+                <br />
+                <em>faces.wall.ag</em>
+            </div>
+
+            <div class="item">
+                <span>Chess (local)</span>
+                <br />
+                <em>192.168.0.11</em>
+            </div>
+
+            <div class="item">
+                <span>Voting (nightly)</span>
+                <br />
+                <em>nightly.cloudfolio.com</em>
+            </div>
+
+            <div class="item">
+                <i class="add icon"></i>
+                New Application
+            </div>
+        </div><!-- .sidebar.left -->
+
+        <!-- right sidebar (options) -->
+        <div class="ui vertical sidebar right">
+            <div class="ui basic segment">
+                <h2>Hütchenspiel</h2>
+
+                <div class="ui divider"></div>
+                <h3>Application</h3>
+
+                <button class="ui red button">
+                    Stop
+                </button>
+
+                <button class="ui red button">
+                    Restart
+                </button>
+
+                <div class="ui divider"></div>
+
+                <div class="ui form">
+                    <h3>Settings</h3>
+                    <div class="fields">
+                        <div class="field">
+                            <label>Max Allowed Users</label>
+                            <input placeholder="Max Concurrent Users" type="text" value="1" />
                         </div>
                     </div>
+                </div>
 
-                    <a class="active item"> Hütchenspiel </a>
+                <div class="ui divider">
 
-                    <a class="item"> Facebook Wall </a>
+                </div>
 
-                    <a class="item"> Schach </a>
+                <div class="ui buttons">
+                    <button class="ui button">
+                        Cancel
+                    </button>
+                    <div class="or"></div>
+                    <button class="ui positive button">
+                        Save
+                    </button>
+                </div>
+            </div><!-- .tabulator.menu -->
+        </div><!-- .sidebar.right -->
 
-                    <a class="item"> Voting </a>
+        <!-- content layer -->
+        <div class="pusher">
+            <div class="ui basic segment">
 
-                </div><!-- .tabulator.menu -->
-            </div><!-- .sidebar.left -->
-
-            <div class="pusher">
-                <div class="ui basic segment">
-
-                    <!-- button row -->
-                    <button class="ui button applications">
-                        <i class="sidebar icon"></i>
-                        Applications
+                <!-- button row -->
+                <div class="ui secondary menu">
+                    <button class="ui positive button applications">
+                        <i class="sidebar icon"></i><span>Hütchenspiel</span>
                     </button>
 
-                    <button class="ui blue button">
-                        <i class="comment icon"></i>
-                        Send Command
-                    </button>
+                    <div class="item server">
+                        <i class="exchange icon"></i>
+                        <span>127.0.0.1</span>
+                    </div>
 
-                    <button class="ui blue button">
-                        <i class="settings icon"></i>
-                        Settings
-                    </button>
+                    <div class="right menu">
+                        <button class="ui primary button">
+                            <i class="terminal icon"></i>                            Shell
+                        </button>
+                        <button class="ui button settings">
+                            <i class="settings icon"></i>
+                            Options
+                        </button>
+                    </div>
+                </div><!-- .secondary.menu -->
 
-                    <div class="ui divider"></div>
+                <div class="ui divider"></div>
 
-                    <!-- content -->
-                    <div class="ui two column divided relaxed stackable grid">
-                        <div class="row">
+                <!-- content -->
+                <div class="ui two column divided relaxed stackable grid">
+                    <div class="row">
 
-                            <!-- charts -->
-                            <div class="four wide column">
-                                <div class="ui basic segment">
-                                    <strong>Users</strong>
-                                    <canvas id="chart-1"></canvas>
+                        <!-- charts -->
+                        <div class="four wide column">
+                            <div class="ui basic segment">
+                                <strong>Users</strong>
+                                <canvas id="chart-1"></canvas>
 
-                                    <div class="ui divider"></div>
+                                <div class="ui divider"></div>
 
-                                    <strong>CPU load</strong>
-                                    <canvas id="chart-2"></canvas>
+                                <strong>CPU load</strong>
+                                <canvas id="chart-2"></canvas>
 
-                                    <div class="ui divider"></div>
+                                <div class="ui divider"></div>
 
-                                    <strong>Memory</strong>
-                                    <canvas id="chart-3"></canvas>
-                                </div>
-                            </div>
-
-                            <!-- grids --->
-                            <div class="twelve wide column">
-
-                                <!-- 200 --->
-                                <h2>1 - 200</h2>
-                                <table class="ui celled definition table">
-                                    <thead>
-                                        <tr>
-                                            <th></th>
-                                            <th colspan="5">1</th>
-                                            <th colspan="5">5</th>
-                                            <th colspan="5">10</th>
-                                            <th colspan="5">15</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="center aligned">
-                                            <td class="right aligned">20</td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                        </tr>
-                                        <tr class="center aligned">
-                                            <td class="right aligned">40</td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                        </tr>
-                                        <tr class="center aligned">
-                                            <td class="right aligned">60</td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                        </tr>
-                                        <tr class="center aligned">
-                                            <td class="right aligned">80</td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                        </tr>
-                                        <tr class="center aligned">
-                                            <td class="right aligned">100</td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                        </tr>
-                                        <tr class="center aligned">
-                                            <td class="right aligned">120</td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                        </tr>
-                                        <tr class="center aligned">
-                                            <td class="right aligned">140</td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                        </tr>
-                                        <tr class="center aligned">
-                                            <td class="right aligned">160</td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                        </tr>
-                                        <tr class="center aligned">
-                                            <td class="right aligned">180</td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                        </tr>
-                                        <tr class="center aligned">
-                                            <td class="right aligned">200</td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-
-                                <!-- 201-400 -->
-                                <h2>201-400</h2>
-                                <table class="ui celled definition table">
-                                    <thead>
-                                        <tr>
-                                            <th></th>
-                                            <th colspan="5">1</th>
-                                            <th colspan="5">5</th>
-                                            <th colspan="5">10</th>
-                                            <th colspan="5">15</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="center aligned">
-                                            <td class="right aligned">20</td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                        </tr>
-                                        <tr class="center aligned">
-                                            <td class="right aligned">40</td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                        </tr>
-                                        <tr class="center aligned">
-                                            <td class="right aligned">60</td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                        </tr>
-                                        <tr class="center aligned">
-                                            <td class="right aligned">80</td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                        </tr>
-                                        <tr class="center aligned">
-                                            <td class="right aligned">100</td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                        </tr>
-                                        <tr class="center aligned">
-                                            <td class="right aligned">120</td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                        </tr>
-                                        <tr class="center aligned">
-                                            <td class="right aligned">140</td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                        </tr>
-                                        <tr class="center aligned">
-                                            <td class="right aligned">160</td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                        </tr>
-                                        <tr class="center aligned">
-                                            <td class="right aligned">180</td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                        </tr>
-                                        <tr class="center aligned">
-                                            <td class="right aligned">200</td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="green checkmark icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                            <td><i class="red warning icon"></i></td>
-                                            <td><i class="grey help icon"></i></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <strong>Memory</strong>
+                                <canvas id="chart-3"></canvas>
                             </div>
                         </div>
-                    </div><!-- .stackable.grid -->
-                </div><!-- .basic.segment -->
-            </div><!-- .pusher -->
-        </div><!-- .segment.pushable -->
+
+                        <!-- grids --->
+                        <div class="twelve wide column">
+
+                            <!-- 200 --->
+                            <h2>1 - 200</h2>
+                            <table class="ui celled definition table">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th colspan="5">1</th>
+                                        <th colspan="5">5</th>
+                                        <th colspan="5">10</th>
+                                        <th colspan="5">15</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="center aligned">
+                                        <td class="right aligned">20</td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                    </tr>
+                                    <tr class="center aligned">
+                                        <td class="right aligned">40</td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                    </tr>
+                                    <tr class="center aligned">
+                                        <td class="right aligned">60</td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                    </tr>
+                                    <tr class="center aligned">
+                                        <td class="right aligned">80</td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                    </tr>
+                                    <tr class="center aligned">
+                                        <td class="right aligned">100</td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                    </tr>
+                                    <tr class="center aligned">
+                                        <td class="right aligned">120</td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                    </tr>
+                                    <tr class="center aligned">
+                                        <td class="right aligned">140</td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                    </tr>
+                                    <tr class="center aligned">
+                                        <td class="right aligned">160</td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                    </tr>
+                                    <tr class="center aligned">
+                                        <td class="right aligned">180</td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                    </tr>
+                                    <tr class="center aligned">
+                                        <td class="right aligned">200</td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <!-- 201-400 -->
+                            <h2>201-400</h2>
+                            <table class="ui celled definition table">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th colspan="5">1</th>
+                                        <th colspan="5">5</th>
+                                        <th colspan="5">10</th>
+                                        <th colspan="5">15</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="center aligned">
+                                        <td class="right aligned">20</td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                    </tr>
+                                    <tr class="center aligned">
+                                        <td class="right aligned">40</td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                    </tr>
+                                    <tr class="center aligned">
+                                        <td class="right aligned">60</td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                    </tr>
+                                    <tr class="center aligned">
+                                        <td class="right aligned">80</td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                    </tr>
+                                    <tr class="center aligned">
+                                        <td class="right aligned">100</td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                    </tr>
+                                    <tr class="center aligned">
+                                        <td class="right aligned">120</td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                    </tr>
+                                    <tr class="center aligned">
+                                        <td class="right aligned">140</td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                    </tr>
+                                    <tr class="center aligned">
+                                        <td class="right aligned">160</td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                    </tr>
+                                    <tr class="center aligned">
+                                        <td class="right aligned">180</td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                    </tr>
+                                    <tr class="center aligned">
+                                        <td class="right aligned">200</td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="green checkmark icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                        <td><i class="red warning sign icon"></i></td>
+                                        <td><i class="grey help icon"></i></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div><!-- .stackable.grid -->
+            </div><!-- .basic.segment -->
+
+            <div class="ui black inverted vertical footer segment">
+                <div class="ui center aligned container">
+                    <img class="ui centered mini image" src="/favicon_invert.png">
+                    <div class="ui horizontal inverted small divided link list">
+                        <a target="_blank" href="https://www.raumhoch.de" class="item">&copy; 2015 by raumHOCH</a>
+                    </div>
+                </div>
+            </div>
+        </div><!-- .pusher -->
 
         <script type="text/javascript" src="lib/jquery-2.1.4.min.js"></script>
         <script type="text/javascript" src="lib/semantic.min.js"></script>
