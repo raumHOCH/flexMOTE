@@ -68,6 +68,7 @@
         var widthScale = (d.width() / (l.cols * 100)).toString();
         var scale = Math.min(heightScale, widthScale);
         var top = Math.round(Math.max(0, (d.height() - (l.rows * 100) * scale) / 2) - (1.5 * gap));
+        var left = Math.round(Math.max(0, (d.width() - (l.cols * 100) * scale) / 2));
 
         // css
         var css = 'transform:scale3d({{s}},{{s}},{{s}});';
@@ -75,8 +76,11 @@
         css += '-ms-transform:scale3d({{s}},{{s}},{{s}});';
         css += '-moz-transform:scale3d({{s}},{{s}},{{s}});';
         css += '-webkit-transform:scale3d({{s}},{{s}},{{s}});';
-        css += 'top:{{t}}px';
-        css = css.replace(/{{s}}/gi, scale).replace(/{{t}}/gi, top);
+        css += 'top:{{t}}px;left:{{l}}px;width:{{w}}px';
+        css = css.replace(/{{s}}/gi, scale);
+        css = css.replace(/{{t}}/gi, top);
+        css = css.replace(/{{l}}/gi, left);
+        css = css.replace(/{{w}}/gi, l.cols * 100);
         $('#remote table').attr('style', css);
 
         window.scrollTo(0, 1);
@@ -103,6 +107,7 @@
         out += '</table>';
 
         $('#remote').empty().html(out);
+        $('#remote table').css('width', (layout.cols * 100) + "px");
     };
 
     /**
