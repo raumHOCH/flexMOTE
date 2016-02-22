@@ -5,3 +5,5 @@
 __MACOSX
 !.gitkeep
 !.empty
+
+server/node_modules/*

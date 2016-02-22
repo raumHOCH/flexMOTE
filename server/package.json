@@ -1,0 +1,11 @@
+{
+    "name": "raumhoch-remote-server",
+    "version": "0.0.1",
+    "description": "raumHOCH - reMOTE - Server",
+    "dependencies": {
+        "express": "~4.13.3",
+        "socket.io": "~1.3.6",
+        "compression": "1.5.2"
+    }
+}
+ 
