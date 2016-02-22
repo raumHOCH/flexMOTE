@@ -6,4 +6,5 @@ __MACOSX
 !.gitkeep
 !.empty
 
+# node modules
 server/node_modules/*
