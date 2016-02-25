@@ -1,16 +1,47 @@
 body {
-    background: #333;
-    color: #FFF;
+    background: #666;
+    color: #000;
 }
 
 table {
-    border: 1px solid #666;
-    border-right: 0;
-    border-bottom: 0;
 }
 
 td {
-    border: 1px solid #666;
-    border-top: 0;
-    border-left: 0;
+}
+
+.red {
+    color: #F00;
+}
+
+.green {
+    color: #090;
+}
+
+.blue {
+    color: #00F;
+}
+
+.button {
+    font-weight: bold;
+}
+
+#status {
+    text-align: left;
+    color: #666;
+    text-indent: 10px;
+    line-height: 2em;
+    font-size: 16px;
+}
+
+#home {
+    color: #000;
+}
+
+.button, .text {
+    background: #DDD;
+}
+
+.html {
+    color: #333;
+    background: #FFF;
 }

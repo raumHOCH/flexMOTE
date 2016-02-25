@@ -7,23 +7,201 @@
     }
 
     // ----- remote ui ---------------------------------------------------------
+    /**
+     *
+     */
     var Remote = window.Remote;
-    Remote.UI = {};
-    Remote.UI.layouts = {};
-    Remote.UI.skins = {};
-    Remote.UI.currentLayout = '';
-    Remote.UI.currentSkin = '';
+    var UI = Remote.UI = {};
+    UI.layouts = {};
+    UI.skins = {};
+    UI.currentLayout = '';
+    UI.currentSkin = '';
+    UI.gridSize = 100;
+    UI.allowedProperties = ["id", "cssClass", "action", "url", "label", "content"];
+
+    // ----- remote ui components -----------------------------------------------------
+    /**
+     * @param {String} id
+     * @param {String} cssClass
+     * @param {Number} cols
+     * @param {Number} rows
+     */
+    var Element = {
+        id: "",
+        cssClass: "",
+        cols: 1,
+        rows: 1
+    };
+
+    /**
+     * @see {Element}
+     */
+    UI.Spacer = $.extend({
+        markup: '<div id="{{id}}" class="spacer {{cssClass}}">&nbsp;</div>'
+    }, Element);
+
+    /**
+     * @see {Element}
+     * @param {String} action
+     * @param {String} label
+     */
+    UI.Button = $.extend({
+        action: '',
+        label: '',
+        markup: '<button id="{{id}}" class="button {{cssClass}}" data-action="{{action}}">{{label}}</button>'
+    }, Element);
+
+    /**
+     * @see {Element}
+     * @param {String} url
+     * @param {String} label
+     * @param {String} target
+     */
+    UI.Link = $.extend({
+        url: '',
+        label: '',
+        target: '',
+        markup: '<a id="{{id}}" class="link {{cssClass}}" href="{{url}}">{{label}}</a>'
+    }, Element);
+
+    /**
+     * @see {Element}
+     * @param {String} content
+     */
+    UI.Text = $.extend({
+        markup: '<div id="{{id}}" class="text {{cssClass}}">{{content}}</div>'
+    }, Element);
+
+    /**
+     * @see {Element}
+     * @param {String} content
+     */
+    UI.HTML = $.extend({
+        markup: '<div id="{{id}}" class="html {{cssClass}}">{{{content}}}</div>'
+    }, Element);
+
+    // ----- public methods ----------------------------------------------------
+    /**
+     *
+     */
+    UI.buildLayout = function(layout) {
+        Remote.DEBUG && console.log('remote ui | buildLayout: ' + layout.id);
+
+        var l = UI.layouts[layout.id] || {};
+        layout = $.extend(l, layout);
+        layout.id = layout.id.toString();
+        UI.layouts[layout.id] = layout;
+        UI.currentLayout = layout.id;
+
+        var col = 0;
+
+        // control value!
+        var maxCols = parseInt(layout.data.cols);
+
+        var out = '<table cellspacing="0" cellpadding="0" border="0">';
+
+        // loop through all buttons. We only allow one "rows", so you can
+        // combine columns, but each one will have the same height.
+        // @TODO col-/rowspan combo? Seems to be very difficult in all major browsers...
+        for (var idx = 0; idx < layout.data.elements.length; idx++) {
+
+            // prepare data
+            var el = layout.data.elements[idx];
+            delete el.markup;
+
+            var cfg = $.extend(true, {}, UI[el.type || "Spacer"], el);
+
+            // open row
+            if (!col) {
+                out += '<tr>';
+            }
+            col += parseInt(cfg.cols);
+
+            // build cell
+            out += '<td colspan="' + cfg.cols + '" style="height:' + (cfg.rows * UI.gridSize) + 'px">';
+
+            var markup = cfg.markup;
+            if (markup) {
+                for (var i = 0; i < UI.allowedProperties.length; i++) {
+                    var prop = UI.allowedProperties[i];
+                    var value = cfg[prop];
+
+                    // sanitize
+                    var regExHtml = new RegExp("{{{" + prop + "}}}", "gi");
+                    var regExText = new RegExp("{{" + prop + "}}", "gi");
+                    markup = markup.replace(regExHtml, value);
+                    markup = markup.replace(regExText, $('<div />').text(value).html());
+                }
+            }
+            else {
+                markup = "&nbsp;";
+            }
+
+            out += markup;
+            out += '</td>';
+
+            // close row
+            if (col == maxCols) {
+                col = 0;
+                out += '</tr>';
+            }
+        }
+        out += '</table>';
+
+        $('#remote').empty().html(out);
+        $('#remote table').css('width', (layout.data.cols * 100) + "px");
+
+        UI.onResize();
+    };
 
     /**
      *
      */
-    Remote.UI.onResize = function() {
+    UI.loadSkin = function(skin, callback) {
+        UI.unloadSkin();
+        Remote.DEBUG && console.log('remote ui | loadSkin: ' + skin.data.baseUrl);
+
+        UI.skins[skin.id] = skin;
+        UI.currentSkin = skin.id;
+
+        var e = document.createElement('link');
+        e.id = "skin";
+        e.rel = "stylesheet";
+        e.type = "text/css";
+        e.href = skin.data.baseUrl.replace(/\/$/, "") + '/style.css';
+        e.onload = function() {
+            Remote.DEBUG && console.log('remote ui | skin loaded');
+            if (callback) {
+                callback();
+            }
+        };
+
+        $('head').append(e);
+        $('body').addClass(skin.data.cssClass);
+    };
+
+    /**
+     *
+     */
+    UI.unloadSkin = function() {
+        Remote.DEBUG && console.log('remote ui | unloadSkin');
+        UI.currentSkin = null;
+
+        $('#skin').remove();
+        $('body').removeAttr('class');
+    };
+
+    // ----- event handler -----------------------------------------------------
+    /**
+     *
+     */
+    UI.onResize = function() {
         Remote.DEBUG && console.log('remote ui | resize');
 
         // calculate scale & top
         var ios = !!/iPad|iPhone|iPod/.test(navigator.platform);
         var d = $(document);
-        var l = Remote.UI.layouts[Remote.UI.currentLayout];
+        var l = UI.layouts[UI.currentLayout];
         var gap = ( ios ? 20 : 0);
         var heightScale = ((d.height() - gap) / (l.data.rows * 100)).toString();
         var widthScale = (d.width() / (l.data.cols * 100)).toString();
@@ -47,126 +225,7 @@
         window.scrollTo(0, 1);
     };
 
-    // ----- public methods ----------------------------------------------------
-    /**
-     *
-     */
-    Remote.UI.buildLayout = function(layout) {
-        Remote.DEBUG && console.log('remote ui | buildLayout: ' + layout.id);
-
-        var l = Remote.UI.layouts[layout.id] || {};
-        layout = $.extend(l, layout);
-        layout.id = layout.id.toString();
-        Remote.UI.layouts[layout.id] = layout;
-        Remote.UI.currentLayout = layout.id;
-
-        var out = '<table cellspacing="0" cellpadding="0" border="0">';
-        for (var i = 0; i < layout.data.rows; i++) {
-            out += '<tr>';
-            for (var j = 0; j < layout.data.cols; j++) {
-                out += '<td>...</td>';
-            }
-            out += '</tr>';
-        }
-        out += '</table>';
-
-        $('#remote').empty().html(out);
-        $('#remote table').css('width', (layout.data.cols * 100) + "px");
-
-        Remote.UI.onResize();
-    };
-
-    /**
-     *
-     */
-    Remote.UI.loadSkin = function(skin, callback) {
-        Remote.UI.unloadSkin();
-        Remote.DEBUG && console.log('remote ui | loadSkin: ' + skin.data.baseUrl);
-
-        Remote.UI.skins[skin.id] = skin;
-        Remote.UI.currentSkin = skin.id;
-
-        var e = document.createElement('link');
-        e.id = "skin";
-        e.rel = "stylesheet";
-        e.type = "text/css";
-        e.href = skin.data.baseUrl.replace(/\/$/, "") + '/style.css';
-        e.onload = function() {
-            Remote.DEBUG && console.log('remote ui | skin loaded');
-            if (callback) {
-                callback();
-            }
-        };
-
-        $('head').append(e);
-        $('body').addClass(skin.data.cssClass);
-    };
-
-    /**
-     *
-     */
-    Remote.UI.unloadSkin = function() {
-        Remote.DEBUG && console.log('remote ui | unloadSkin');
-        Remote.UI.currentSkin = null;
-
-        $('#skin').remove();
-        $('body').removeAttr('class');
-    };
-
-    // ----- ui components -----------------------------------------------------
-    /**
-     * @param {String} id
-     * @param {String} cssClass
-     * @param {String} cols
-     * @param {String} rows
-     */
-    var BaseElement = {
-        id: "",
-        cssClass: "",
-        cols: 1,
-        rows: 1
-    };
-
-    /**
-     * @see {Remote.UI.Element}
-     */
-    Remote.UI.Spacer = $.extend({
-        markup: '<div id="{{id}}" class="spacer {{cssClass}}">&nbsp;</div>'
-    }, BaseElement);
-
-    /**
-     * @see {Remote.UI.Element}
-     * @param {String} action
-     * @param {String} label
-     */
-    Remote.UI.Button = $.extend({
-        action: '',
-        label: '',
-        markup: '<button id="{{id}}" class="button {{cssClass}}" data-action="{{action}}">{{label}}</button>'
-    }, BaseElement);
-
-    /**
-     * @see {Remote.UI.Element}
-     * @param {String} url
-     * @param {String} label
-     * @param {String} target
-     */
-    Remote.UI.Link = $.extend({
-        url: '',
-        label: '',
-        target: '',
-        markup: '<a id="{{id}}" class="link {{cssClass}}" href="{{url}}">{{label}}</a>'
-    }, BaseElement);
-
-    /**
-     * @see {Remote.UI.Element}
-     * @param {String} content
-     */
-    Remote.UI.Text = $.extend({
-        markup: '<div id="{{id}}" class="text {{cssClass}}">{{content}}</div>'
-    }, BaseElement);
-
     // ----- initialization ----------------------------------------------------
-    $(window).on('resize', Remote.UI.onResize);
+    $(window).on('resize', UI.onResize);
 
 })(window, window.jQuery ? window.jQuery : window.$);

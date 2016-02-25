@@ -26,15 +26,14 @@
     /**
      *
      */
-    Remote.defaultHandler = function(cmd) {
-        Remote.DEBUG && console.log('remote | defaultHandler ', cmd);
+    Remote.handleCommand = function(cmd) {
+        Remote.DEBUG && console.log('remote | handleCommand ', cmd);
 
         switch (cmd.action) {
             case 'set':
                 switch (cmd.type) {
                     case 'layout':
                         Remote.UI.buildLayout(cmd);
-                        Remote.UI.onResize();
                         break;
 
                     case 'skin':

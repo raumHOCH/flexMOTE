@@ -23,12 +23,6 @@ io.on('connection', function(socket) {
     socket.on('disconnect', function() {
         console.log('socket.io | user disconnected:', socket.id);
     });
-
-    // test cmd
-    // @TODO remove
-    socket.emit('cmd', {
-        id: 1
-    });
 });
 
 // ---- go! --------------------------------------------------------------------

@@ -2,6 +2,8 @@
     margin: 0;
     padding: 0;
     border: 0;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 20px;
 }
 
 body, html, div#remote, table {
@@ -12,15 +14,10 @@ body, html, div#remote, table {
 }
 
 body, html {
-    font: 10px Helvetica, Arial;
     overflow: hidden;
     text-align: center;
     height: 100%;
     background: url('../favicon.png') center center no-repeat #000;
-}
-
-div#remote {
-    height: 100%;
 }
 
 table {
@@ -31,9 +28,36 @@ table {
     -webkit-transform-origin: top left;
 }
 
+tr {
+    vertical-align: top;
+}
+
 td {
     width: 100px;
     height: 100px;
-    text-align: center;
+}
+
+.spacer, .button, .link, .text, .html {
+    width: 100%;
+    height: 100%;
     line-height: 100px;
+    text-align: center;
+    border: 0;
+    background: none;
+    color: #FFF;
+}
+
+.html {
+    width: auto;
+    text-align: left;
+    line-height: 1.4em;
+    overflow: auto;
+}
+
+.html p {
+    padding: 10px;
+}
+
+#remote {
+    height: 100%;
 }
