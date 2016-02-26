@@ -16,7 +16,6 @@
     UI.skins = {};
     UI.currentLayout = '';
     UI.currentSkin = '';
-    UI.gridSize = 100;
     UI.allowedProperties = ["id", "cssClass", "action", "url", "label", "content"];
 
     // ----- remote ui components -----------------------------------------------------
@@ -90,6 +89,8 @@
         var l = UI.layouts[layout.id] || {};
         layout = $.extend(l, layout);
         layout.id = layout.id.toString();
+        layout.data.gridSize = layout.data.gridSize || 100;
+
         UI.layouts[layout.id] = layout;
         UI.currentLayout = layout.id;
 
@@ -98,7 +99,7 @@
         // control value!
         var maxCols = parseInt(layout.data.cols);
 
-        var out = '<table cellspacing="0" cellpadding="0" border="0">';
+        var out = '<table id="' + he(layout.id) + '" cellspacing="0" cellpadding="0" border="0">';
 
         // loop through all buttons. We only allow one "rows", so you can
         // combine columns, but each one will have the same height.
@@ -118,7 +119,7 @@
             col += parseInt(cfg.cols);
 
             // build cell
-            out += '<td colspan="' + cfg.cols + '" style="height:' + (cfg.rows * UI.gridSize) + 'px">';
+            out += '<td colspan="' + cfg.cols + '" style="height:' + (cfg.rows * layout.data.gridSize) + 'px">';
 
             var markup = cfg.markup;
             if (markup) {
@@ -130,7 +131,7 @@
                     var regExHtml = new RegExp("{{{" + prop + "}}}", "gi");
                     var regExText = new RegExp("{{" + prop + "}}", "gi");
                     markup = markup.replace(regExHtml, value);
-                    markup = markup.replace(regExText, $('<div />').text(value).html());
+                    markup = markup.replace(regExText, he(value));
                 }
             }
             else {
@@ -149,7 +150,7 @@
         out += '</table>';
 
         $('#remote').empty().html(out);
-        $('#remote table').css('width', (layout.data.cols * 100) + "px");
+        $('#remote table').css('width', (layout.data.cols * layout.data.gridSize) + "px");
 
         UI.onResize();
     };
@@ -158,17 +159,21 @@
      *
      */
     UI.loadSkin = function(skin, callback) {
-        UI.unloadSkin();
-        Remote.DEBUG && console.log('remote ui | loadSkin: ' + skin.data.baseUrl);
 
+        var s = UI.skins[skin.id] || {};
+        skin = $.extend(s, skin);
+        skin.id = skin.id.toString();
+
+        UI.unloadSkin();
         UI.skins[skin.id] = skin;
         UI.currentSkin = skin.id;
 
+        Remote.DEBUG && console.log('remote ui | loadSkin: ' + skin.data.url);
         var e = document.createElement('link');
         e.id = "skin";
         e.rel = "stylesheet";
         e.type = "text/css";
-        e.href = skin.data.baseUrl.replace(/\/$/, "") + '/style.css';
+        e.href = skin.data.url;
         e.onload = function() {
             Remote.DEBUG && console.log('remote ui | skin loaded');
             if (callback) {
@@ -177,7 +182,7 @@
         };
 
         $('head').append(e);
-        $('body').addClass(skin.data.cssClass);
+        $('body').addClass(skin.id);
     };
 
     /**
@@ -203,11 +208,11 @@
         var d = $(document);
         var l = UI.layouts[UI.currentLayout];
         var gap = ( ios ? 20 : 0);
-        var heightScale = ((d.height() - gap) / (l.data.rows * 100)).toString();
-        var widthScale = (d.width() / (l.data.cols * 100)).toString();
+        var heightScale = ((d.height() - gap) / (l.data.rows * l.data.gridSize)).toString();
+        var widthScale = (d.width() / (l.data.cols * l.data.gridSize)).toString();
         var scale = Math.min(heightScale, widthScale);
-        var top = Math.round(Math.max(0, (d.height() - (l.data.rows * 100) * scale) / 2) - (1.5 * gap));
-        var left = Math.round(Math.max(0, (d.width() - (l.data.cols * 100) * scale) / 2));
+        var top = Math.round(Math.max(0, (d.height() - (l.data.rows * l.data.gridSize) * scale) / 2) - (1.5 * gap));
+        var left = Math.round(Math.max(0, (d.width() - (l.data.cols * l.data.gridSize) * scale) / 2));
 
         // css
         var css = 'transform:scale3d({{s}},{{s}},{{s}});';
@@ -219,10 +224,18 @@
         css = css.replace(/{{s}}/gi, scale);
         css = css.replace(/{{t}}/gi, top);
         css = css.replace(/{{l}}/gi, left);
-        css = css.replace(/{{w}}/gi, l.data.cols * 100);
+        css = css.replace(/{{w}}/gi, l.data.cols * l.data.gridSize);
         $('#remote table').attr('style', css);
 
         window.scrollTo(0, 1);
+    };
+
+    // ----- private helper ----------------------------------------------------
+    /**
+     * htmlentities
+     */
+    var he = function(src) {
+        return $('<div />').text(src).html();
     };
 
     // ----- initialization ----------------------------------------------------

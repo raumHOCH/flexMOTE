@@ -24,23 +24,21 @@
     Remote.UI.loadSkin({
         action: 'set',
         type: 'skin',
-        id: 1,
+        id: 'skin-hello-world',
         data: {
-            name: 'Hello World',
-            cssClass: 'hello-world',
-            baseUrl: 'http://localhost/0_RAUMHOCH/reMOTE/src/applications/hello-world/skin/'
-        }
-    }, function() {
+            url: 'http://localhost/0_RAUMHOCH/reMOTE/src/applications/hello-world/skin/style.css'
+        }    }, function() {
         // build gui - hello world w/ HTML
         Remote.UI.buildLayout({
             action: 'set',
             type: 'layout',
-            id: '1',
+            id: 'layout-1',
             data: {
                 name: 'Layout 1',
                 orientation: 'landscape',
-                cols: 5,
-                rows: 7,
+                gridSize: 50,
+                cols: 10,
+                rows: 14,
                 elements: [
 
                 // first row
@@ -54,7 +52,7 @@
                     id: "title",
                     content: "Hello World",
                     cssClass: "blue",
-                    cols: 3
+                    cols: 8
                 }, {
                     type: "Button",
                     id: "close",
@@ -67,8 +65,8 @@
                     type: "HTML",
                     id: "content",
                     content: '<p>Hello World!</p><p><strong>Lorem Ipsum</strong> foo bar bat! foo bar bat! foo bar bat! foo bar bat! foo bar bat! foo bar bat! foo bar bat! foo bar bat!</p><p>Hello World!</p><p><strong>Lorem Ipsum</strong> foo bar bat! foo bar bat! foo bar bat! foo bar bat! foo bar bat! foo bar bat! foo bar bat! foo bar bat!</p><p>Hello World!</p><p><strong>Lorem Ipsum</strong> foo bar bat! foo bar bat! foo bar bat! foo bar bat! foo bar bat! foo bar bat! foo bar bat! foo bar bat!</p><p>Hello World!</p><p><strong>Lorem Ipsum</strong> foo bar bat! foo bar bat! foo bar bat! foo bar bat! foo bar bat! foo bar bat! foo bar bat! foo bar bat!</p>',
-                    cols: 5,
-                    rows: 5
+                    cols: 10,
+                    rows: 12
                 },
 
                 // third row
@@ -76,18 +74,16 @@
                     type: "Text",
                     id: "status",
                     content: "Status.... (<p>XSS Test</p><script>alert('foo');)",
-                    cols: 5
+                    cols: 10
                 }]
             }
         });
-
-        return;
 
         // remote control (cF)
         Remote.UI.buildLayout({
             action: 'set',
             type: 'layout',
-            id: '2',
+            id: '"><script>alert(\'foo!\');</script><table id="layout-2',
             data: {
                 name: 'Layout 2',
                 orientation: 'portrait',
@@ -165,6 +161,8 @@
                 }]
             }
         });
+
+        return;
 
         // remote control (cF)
         Remote.UI.buildLayout({

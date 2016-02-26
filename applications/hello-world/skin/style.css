@@ -1,12 +1,7 @@
+/* general skin styles */
 body {
     background: #666;
     color: #000;
-}
-
-table {
-}
-
-td {
 }
 
 .red {
@@ -25,6 +20,16 @@ td {
     font-weight: bold;
 }
 
+.button, .text {
+    background: #DDD;
+}
+
+.html {
+    color: #333;
+    background: #FFF;
+}
+
+/* ui elements */
 #status {
     text-align: left;
     color: #666;
@@ -37,11 +42,16 @@ td {
     color: #000;
 }
 
-.button, .text {
-    background: #DDD;
+/* layout adjustments */
+#layout-1 td {
+    width: 50px;
+    height: 50px;
 }
 
-.html {
-    color: #333;
-    background: #FFF;
+#layout-1 .spacer, .button, .link, .text, .html {
+    line-height: 50px;
+}
+
+#layout-1 * {
+    font-size: 16px;
 }
