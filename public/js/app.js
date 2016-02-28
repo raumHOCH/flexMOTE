@@ -26,7 +26,7 @@
         type: 'skin',
         id: 'skin-hello-world',
         data: {
-            url: 'http://localhost/0_RAUMHOCH/reMOTE/src/applications/hello-world/skin/style.css'
+            url: 'http://localhost:3001/hello-world/skin/style.css'
         }    }, function() {
         // build gui - hello world w/ HTML
         Remote.UI.buildLayout({

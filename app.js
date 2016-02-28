@@ -1,13 +1,12 @@
-var express = require('./server/node_modules/express');
+var express = require('express');
 var app = express();
 var http = require('http').Server(app);
-var io = require('./server/node_modules/socket.io')(http);
-var compress = require('./server/node_modules/compression');
+var io = require('socket.io')(http);
+var compress = require('compression');
 
 // ---- client -----------------------------------------------------------------
 app.use(compress());
-app.use(express.static(__dirname + '/client'));
-app.use('/applications', express.static(__dirname + '/applications'));
+app.use(express.static(__dirname + '/public'));
 
 // ---- socket.io --------------------------------------------------------------
 /**

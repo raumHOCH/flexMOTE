@@ -1,7 +1,7 @@
 {
-    "name": "raumhoch-remote-server",
-    "version": "0.0.1",
-    "description": "raumHOCH - reMOTE - Server",
+    "name": "remotejs-core",
+    "version": "0.1.0",
+    "description": "reMOTE.js - core package",
     "dependencies": {
         "express": "~4.13.3",
         "socket.io": "~1.3.6",
