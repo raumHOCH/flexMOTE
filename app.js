@@ -16,15 +16,44 @@ app.use(express.static(__dirname + '/public'));
 io.on('connection', function(socket) {
     console.log('socket.io | connected:', socket.id);
 
+    // some event handlers
     /**
-     *
+     * handle incoming messages
+     * @param {Object} params
+     */
+    socket.on('cmd', function(params) {
+        socket.broadcast.emit('cmd', params);
+    });
+
+    /**
+     * client disconnected
      */
     socket.on('disconnect', function() {
         console.log('socket.io | user disconnected:', socket.id);
+
+        // @TODO implement right protocol (set user/app instead of generic message)
+        socket.broadcast.emit('cmd', {
+            'target': '*',
+            'type': 'generic',
+            'data': {
+                'message': 'client disconnected!'
+            }
+        });
     });
+
+    // initial message
+    // @TODO implement right protocol (set user/app instead of generic message)
+    socket.broadcast.emit('cmd', {
+        'target': '*',
+        'type': 'generic',
+        'data': {
+            'message': 'client connected!'
+        }
+    });
+
 });
 
 // ---- go! --------------------------------------------------------------------
 http.listen(3000, function() {
-    console.log('listening on *:3000');
+    console.log('reMOTE.js - core; listening on *:3000');
 });

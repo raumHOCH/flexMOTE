@@ -60,6 +60,22 @@
     /**
      *
      */
+    Remote.sendCommand = function(data, callback) {
+        if ( typeof data == 'function') {
+            callback = data;
+            data = {};
+        }
+        Remote.connection.emit('cmd', data, function() {
+            var args = arguments;
+            if (callback) {
+                callback.apply(Remote.connection, args);
+            }
+        });
+    };
+
+    /**
+     *
+     */
     Remote.onConnect = function() {
         Remote.DEBUG && console.log("remote | connected to " + Remote.CHANNEL);
         Remote.DEBUG && console.log("remote | connected as " + Remote.connection.id);
