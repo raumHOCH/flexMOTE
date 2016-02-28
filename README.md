@@ -12,7 +12,7 @@
 
 - install nodejs dependencies
 
-      (cd server && npm install)
+      npm install
 
 - start server
       node app.js
