@@ -58,7 +58,8 @@
     };
 
     /**
-     *
+     * @param {Object} data
+     * @param {Function} callback
      */
     Remote.sendCommand = function(data, callback) {
         if ( typeof data == 'function') {
@@ -70,6 +71,17 @@
             if (callback) {
                 callback.apply(Remote.connection, args);
             }
+        });
+    };
+
+    /**
+     * call this to get the current latency (console.log output)
+     */
+    Remote.ping = function() {
+        var start = Date.now();
+        Remote.connection.emit('ping', function() {
+            console.log('remote | ping: ' + ((Date.now() - start) / 2) + ' ms');
+            setTimeout(Remote.ping, 5000);
         });
     };
 

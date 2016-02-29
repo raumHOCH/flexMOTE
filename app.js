@@ -26,6 +26,13 @@ io.on('connection', function(socket) {
     });
 
     /**
+     * @param {Function} callback
+     */
+    socket.on('ping', function(callback) {
+        callback();
+    });
+
+    /**
      * client disconnected
      */
     socket.on('disconnect', function() {

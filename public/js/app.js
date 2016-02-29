@@ -19,4 +19,6 @@
     Remote.connection.on('disconnect', Remote.onDisconnect);
     Remote.connection.on('cmd', Remote.handleCommand);
 
+    Remote.ping();
+
 })(window);
