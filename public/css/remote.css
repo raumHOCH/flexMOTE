@@ -45,6 +45,7 @@ td {
     border: 0;
     background: none;
     color: #FFF;
+    display: block;
 }
 
 .html {

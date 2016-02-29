@@ -16,9 +16,18 @@
     UI.skins = {};
     UI.currentLayout = '';
     UI.currentSkin = '';
-    UI.allowedProperties = ["id", "cssClass", "action", "url", "label", "content"];
+    UI.allowedProperties = ["id", "cssClass", "action", "url", "label", "content", "state"];
 
     // ----- remote ui components -----------------------------------------------------
+    /**
+     * allowed states
+     */
+    var State = {
+        DEFAULT: 'default',
+        DISABLED: 'disabled',
+        PRESSED: 'pressed'
+    };
+
     /**
      * @param {String} id
      * @param {String} cssClass
@@ -28,6 +37,7 @@
     var Element = {
         id: "",
         cssClass: "",
+        state: State.DEFAULT,
         cols: 1,
         rows: 1
     };
@@ -36,7 +46,7 @@
      * @see {Element}
      */
     UI.Spacer = $.extend({
-        markup: '<div id="{{id}}" class="spacer {{cssClass}}">&nbsp;</div>'
+        markup: '<div id="{{id}}" class="spacer {{cssClass}} {{state}}">&nbsp;</div>'
     }, Element);
 
     /**
@@ -47,7 +57,7 @@
     UI.Button = $.extend({
         action: '',
         label: '',
-        markup: '<button id="{{id}}" class="button {{cssClass}}" data-action="{{action}}">{{label}}</button>'
+        markup: '<button id="{{id}}" class="button {{cssClass}} {{state}}" data-action="{{action}}">{{label}}</button>'
     }, Element);
 
     /**
@@ -60,7 +70,7 @@
         url: '',
         label: '',
         target: '',
-        markup: '<a id="{{id}}" class="link {{cssClass}}" href="{{url}}">{{label}}</a>'
+        markup: '<a id="{{id}}" class="link {{cssClass}} {{state}}" href="{{url}}">{{label}}</a>'
     }, Element);
 
     /**
@@ -68,7 +78,7 @@
      * @param {String} content
      */
     UI.Text = $.extend({
-        markup: '<div id="{{id}}" class="text {{cssClass}}">{{content}}</div>'
+        markup: '<div id="{{id}}" class="text {{cssClass}} {{state}}">{{content}}</div>'
     }, Element);
 
     /**
@@ -76,7 +86,7 @@
      * @param {String} content
      */
     UI.HTML = $.extend({
-        markup: '<div id="{{id}}" class="html {{cssClass}}">{{{content}}}</div>'
+        markup: '<div id="{{id}}" class="html {{cssClass}} {{state}}">{{{content}}}</div>'
     }, Element);
 
     // ----- public methods ----------------------------------------------------
@@ -149,9 +159,17 @@
         }
         out += '</table>';
 
+        // rebuild gui and event handlers
+        $('#remote td>*').off('mousedown touchstart', UI.onElementPressed);
+        $('#remote td>*').off('mouseup touchend', UI.onElementReleased);
+
         $('#remote').empty().html(out);
         $('#remote table').css('width', (layout.data.cols * layout.data.gridSize) + "px");
 
+        $('#remote td>*').on('mousedown touchstart', UI.onElementPressed);
+        $('#remote td>*').on('mouseup touchend', UI.onElementReleased);
+
+        // scale to fit
         UI.onResize();
     };
 
@@ -243,6 +261,42 @@
         $('#remote table').attr('style', css);
 
         window.scrollTo(0, 1);
+    };
+
+    /**
+     * @param {Object} event
+     */
+    UI.onElementPressed = function(event) {
+        Remote.DEBUG && console.log('remote ui | element pressed', event.currentTarget);
+
+        if (event.currentTarget.id) {
+            Remote.sendCommand({
+                action: 'set',
+                type: 'button',
+                id: event.currentTarget.id,
+                data: {
+                    state: State.PRESSED
+                }
+            });
+        }
+    };
+
+    /**
+     * @param {Object} event
+     */
+    UI.onElementReleased = function(event) {
+        Remote.DEBUG && console.log('remote ui | element released', event.currentTarget);
+
+        if (event.currentTarget.id) {
+            Remote.sendCommand({
+                action: 'set',
+                type: 'button',
+                id: event.currentTarget.id,
+                data: {
+                    state: State.DEFAULT
+                }
+            });
+        }
     };
 
     // ----- private helper ----------------------------------------------------
