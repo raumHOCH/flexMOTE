@@ -21,8 +21,11 @@ io.on('connection', function(socket) {
      * handle incoming messages
      * @param {Object} params
      */
-    socket.on('cmd', function(params) {
+    socket.on('cmd', function(params, callback) {
         socket.broadcast.emit('cmd', params);
+        if (callback) {
+            callback();
+        }
     });
 
     /**

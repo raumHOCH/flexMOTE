@@ -156,44 +156,59 @@
     };
 
     /**
-     *
+     * @param {Object} skin
      */
-    UI.loadSkin = function(skin, callback) {
+    UI.loadSkin = function(skin) {
+        Remote.DEBUG && console.log('remote ui | load skin:', skin.id);
 
+        // merge settings
         var s = UI.skins[skin.id] || {};
         skin = $.extend(s, skin);
-        skin.id = skin.id.toString();
 
-        UI.unloadSkin();
+        // no full skin config?
+        if (!skin.id || !skin.data.url) {
+            return UI.unloadSkin(true);
+        }
+
+        // unset old skin
+        var stylesheetChanged = $('#skin-loader').attr('href') != skin.data.url;
+        UI.unloadSkin(stylesheetChanged);
+
+        // set new skin
+        skin.id = skin.id.toString();
         UI.skins[skin.id] = skin;
         UI.currentSkin = skin.id;
 
-        Remote.DEBUG && console.log('remote ui | loadSkin: ' + skin.data.url);
-        var e = document.createElement('link');
-        e.id = "skin";
-        e.rel = "stylesheet";
-        e.type = "text/css";
-        e.href = skin.data.url;
-        e.onload = function() {
-            Remote.DEBUG && console.log('remote ui | skin loaded');
-            if (callback) {
-                callback();
-            }
-        };
+        // load css file if needed
+        if (stylesheetChanged) {
+            Remote.DEBUG && console.log('remote ui | load css: ' + skin.data.url);
 
-        $('head').append(e);
-        $('body').addClass(skin.id);
+            var e = document.createElement('link');
+            e.id = "skin-loader";
+            e.rel = "stylesheet";
+            e.type = "text/css";
+            e.href = skin.data.url;
+            e.onload = function() {
+                Remote.DEBUG && console.log('remote ui | css loaded');
+            };
+
+            $('head').append(e);
+        }
+
+        $('body').attr('id', skin.id);
     };
 
     /**
      *
      */
-    UI.unloadSkin = function() {
+    UI.unloadSkin = function(removeStylesheet) {
         Remote.DEBUG && console.log('remote ui | unloadSkin');
         UI.currentSkin = null;
 
-        $('#skin').remove();
-        $('body').removeAttr('class');
+        if (removeStylesheet) {
+            $('#skin-loader').remove();
+        }
+        $('body').removeAttr('id');
     };
 
     // ----- event handler -----------------------------------------------------
