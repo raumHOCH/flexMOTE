@@ -13,14 +13,14 @@
     Remote.connection = null;
 
     /**
+     *
+     */
+    Remote.room = null;
+
+    /**
      * global flag to show/hide console.log messages
      */
     Remote.DEBUG = true;
-
-    /**
-     * channel is determined by the url: http://yourremoteserver.com/#/app-id
-     */
-    Remote.CHANNEL = window.location.href.replace("#/", "");
 
     // ----- event handler -----------------------------------------------------
     /**
@@ -61,11 +61,14 @@
      * @param {Object} data
      * @param {Function} callback
      */
-    Remote.sendCommand = function(data, callback) {
+    Remote.sendCommand = function(target, data, callback) {
+        data.target = target;
+
         if ( typeof data == 'function') {
             callback = data;
             data = {};
         }
+
         Remote.connection.emit('cmd', data, function() {
             var args = arguments;
             if (callback) {
@@ -86,11 +89,41 @@
     };
 
     /**
+     * @param {String} room (optional)
+     */
+    Remote.join = function(room, callback) {
+        Remote.connection.emit('join', room, function(room) {
+            console.log('remote | join: ', room);
+            Remote.room = room;
+            if (callback) {
+                callback(room);
+            }
+        });
+    };
+
+    /**
+     * @param {String} room (optional)
+     */
+    Remote.leave = function(callback) {
+        Remote.connection.emit('leave', room, function(room) {
+            console.log('remote | leave: ', room);
+            if (callback) {
+                callback(room);
+            }
+        });
+    };
+
+    /**
      *
      */
     Remote.onConnect = function() {
-        Remote.DEBUG && console.log("remote | connected to " + Remote.CHANNEL);
-        Remote.DEBUG && console.log("remote | connected as " + Remote.connection.id);
+        Remote.DEBUG && console.log("remote | connected to", Remote.connection.io.uri);
+        Remote.DEBUG && console.log("remote | connected as", Remote.connection.id);
+
+        var room = location.hash.substr(1);
+        if (room.length == 5) {
+            Remote.join(room);
+        };
     };
 
     /**

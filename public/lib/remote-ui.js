@@ -237,9 +237,13 @@
         Remote.DEBUG && console.log('remote ui | resize');
 
         // calculate scale & top
+        var l = UI.layouts[UI.currentLayout];
+        if (!l) {
+            return;
+        }
+
         var ios = !!/iPad|iPhone|iPod/.test(navigator.platform);
         var d = $(document);
-        var l = UI.layouts[UI.currentLayout];
         var gap = ( ios ? 20 : 0);
         var heightScale = ((d.height() - gap) / (l.data.rows * l.data.gridSize)).toString();
         var widthScale = (d.width() / (l.data.cols * l.data.gridSize)).toString();
@@ -270,7 +274,7 @@
         Remote.DEBUG && console.log('remote ui | element pressed', event.currentTarget);
 
         if (event.currentTarget.id) {
-            Remote.sendCommand({
+            Remote.sendCommand('*', {
                 action: 'set',
                 type: 'button',
                 id: event.currentTarget.id,
@@ -288,7 +292,7 @@
         Remote.DEBUG && console.log('remote ui | element released', event.currentTarget);
 
         if (event.currentTarget.id) {
-            Remote.sendCommand({
+            Remote.sendCommand('*', {
                 action: 'set',
                 type: 'button',
                 id: event.currentTarget.id,

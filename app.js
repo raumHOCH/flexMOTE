@@ -22,7 +22,17 @@ io.on('connection', function(socket) {
      * @param {Object} params
      */
     socket.on('cmd', function(params, callback) {
-        socket.broadcast.emit('cmd', params);
+        console.log("socket.io | cmd:", socket.id, params.target);
+
+        // forward <cmd> to params.target or ALL
+        if (params.target && params.target != '*') {
+            io.to(params.target).emit('cmd', params);
+        }
+        else {
+            socket.broadcast.to(socket.room).emit('cmd', params);
+        }
+
+        // fire callback (if any)
         if (callback) {
             callback();
         }
@@ -32,33 +42,61 @@ io.on('connection', function(socket) {
      * @param {Function} callback
      */
     socket.on('ping', function(callback) {
-        callback();
+        console.log("socket.io | ping (" + socket.id + ")");
+        if (callback) {
+            callback();
+        }
     });
 
     /**
-     * client disconnected
+     * join a room, if no room specified create one
      */
-    socket.on('disconnect', function() {
-        console.log('socket.io | user disconnected:', socket.id);
+    socket.on('join', function(room, callback) {
+        var room = room || Math.random().toString().replace(".", "").substr(0, 5);
 
-        // @TODO implement right protocol (set user/app instead of generic message)
-        socket.broadcast.emit('cmd', {
-            'target': '*',
-            'type': 'generic',
-            'data': {
-                'message': 'client disconnected!'
-            }
+        console.log("socket.io | user (" + socket.id + ") - join: " + room);
+
+        socket.join(room);
+        socket.room = room;
+        socket.broadcast.to(socket.room).emit('cmd', {
+            action: 'join',
+            type: 'user',
+            id: socket.id
         });
+
+        if (callback) {
+            callback(room);
+        }
     });
 
-    // initial message
-    // @TODO implement right protocol (set user/app instead of generic message)
-    socket.broadcast.emit('cmd', {
-        'target': '*',
-        'type': 'generic',
-        'data': {
-            'message': 'client connected!'
-        }
+    /**
+     *
+     */
+    socket.on('leave', function(room) {
+        console.log("socket.io | user (" + socket.id + ") - leave: " + room);
+
+        socket.leave(room);
+        socket.broadcast.to(room).emit('cmd', {
+            action: 'leave',
+            type: 'user',
+            id: socket.id
+        });
+        delete socket.room;
+    });
+
+    /**
+     * socket disconnected
+     */
+    socket.on('disconnect', function() {
+        console.log('socket.io | user disconnected:', socket.id, socket.room);
+
+        socket.leave(socket.room);
+        socket.broadcast.to(socket.room).emit('cmd', {
+            action: 'disconnect',
+            type: 'user',
+            id: socket.id
+        });
+        delete socket.room;
     });
 
 });
