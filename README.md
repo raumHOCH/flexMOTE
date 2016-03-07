@@ -1,4 +1,4 @@
-# reMOTE.js
+# flexMOTE
 
 ## System requirements
 

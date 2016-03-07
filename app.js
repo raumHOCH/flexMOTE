@@ -103,5 +103,5 @@ io.on('connection', function(socket) {
 
 // ---- go! --------------------------------------------------------------------
 http.listen(3000, function() {
-    console.log('reMOTE.js - core; listening on *:3000');
+    console.log('flexMOTE - core; listening on *:3000');
 });
