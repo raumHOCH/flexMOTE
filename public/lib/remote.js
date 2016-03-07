@@ -84,6 +84,7 @@
         var start = Date.now();
         Remote.connection.emit('ping', function() {
             console.log('remote | ping: ' + ((Date.now() - start) / 2) + ' ms');
+            $('#debug').html('ping: ' + ((Date.now() - start) / 2) + ' ms');
             setTimeout(Remote.ping, 5000);
         });
     };
@@ -122,7 +123,7 @@
 
         var room = location.hash.substr(1);
         if (room.length == 5) {
-            Remote.join(room);
+            Remote.join(room, Remote.ping);
         };
     };
 

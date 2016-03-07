@@ -51,6 +51,13 @@
 
     /**
      * @see {Element}
+     */
+    UI.Debug = $.extend({
+        markup: '<div id="{{id}}" class="debug {{cssClass}} {{state}}">&nbsp;</div>'
+    }, Element);
+
+    /**
+     * @see {Element}
      * @param {String} action
      * @param {String} label
      */
