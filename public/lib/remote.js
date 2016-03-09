@@ -83,9 +83,42 @@
     Remote.ping = function() {
         var start = Date.now();
         Remote.connection.emit('ping', function() {
-            console.log('remote | ping: ' + ((Date.now() - start) / 2) + ' ms');
+            Remote.DEBUG && console.log('remote | ping: ' + ((Date.now() - start) / 2) + ' ms');
             $('#debug').html('ping: ' + ((Date.now() - start) / 2) + ' ms');
             setTimeout(Remote.ping, 5000);
+        });
+    };
+
+    /**
+     * Register a new channel, settings should look like this:
+     *
+     * {
+     *    app: 'your-app-name',
+     *    version: '0.x',
+     *    maxUsers: -1, // -1 = unlimited
+     *    timeout: 5000,
+     *    stickySession: false,
+     *    secret: 'your-api-key'
+     * }
+     *
+     * @param {Object} settings
+     * @param {Function} callback
+     */
+    Remote.register = function(settings, callback) {
+        // :TODO: add settings.room to request a specific room id
+
+        Remote.DEBUG && console.log('remote | register:', settings);
+        Remote.connection.emit('register', settings, function(status, room) {
+            Remote.DEBUG && console.log(' >', status, room);
+
+            if (status != 200) {
+                return alert(status);
+            }
+
+            Remote.room = room;
+            if (callback) {
+                callback(room);
+            }
         });
     };
 
@@ -93,8 +126,9 @@
      * @param {String} room (optional)
      */
     Remote.join = function(room, callback) {
-        Remote.connection.emit('join', room, function(room) {
-            console.log('remote | join: ', room);
+        Remote.DEBUG && console.log('remote | join:', room);
+        Remote.connection.emit('join', room, function(status, room) {
+            Remote.DEBUG && console.log(' >', status, room);
             Remote.room = room;
             if (callback) {
                 callback(room);
@@ -106,8 +140,9 @@
      * @param {String} room (optional)
      */
     Remote.leave = function(callback) {
-        Remote.connection.emit('leave', room, function(room) {
-            console.log('remote | leave: ', room);
+        Remote.DEBUG && console.log('remote | leave');
+        Remote.connection.emit('leave', room, function(status, room) {
+            Remote.DEBUG && console.log(' >', status, room);
             if (callback) {
                 callback(room);
             }

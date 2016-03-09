@@ -10,6 +10,12 @@ app.use(express.static(__dirname + '/public'));
 
 // ---- socket.io --------------------------------------------------------------
 /**
+ * we store all room settings in a global object. These data will be updated as
+ * soon as rooms are created of closed.
+ */
+io.sockets.adapter.settings = {};
+
+/**
  * @TODO implement channels / rooms / namespaces
  * @param {Object} socket
  */
@@ -49,39 +55,66 @@ io.on('connection', function(socket) {
     });
 
     /**
+     * register a room
+     */
+    socket.on('register', function(settings, callback) {
+        var room = Math.random().toString().replace(".", "").substr(0, 5);
+
+        // :TODO: add credentials check
+        console.log("socket.io | user (" + socket.id + ") - register:", settings);
+        socket.join(room);
+        socket.room = room;
+
+        io.sockets.adapter.settings[room] = settings;
+
+        console.log(io.sockets.adapter);
+        callback(200, room);
+    });
+
+    /**
      * join a room, if no room specified create one
      */
     socket.on('join', function(room, callback) {
-        var room = room || Math.random().toString().replace(".", "").substr(0, 5);
-
         console.log("socket.io | user (" + socket.id + ") - join: " + room);
+
+        if (!room || !io.sockets.adapter.rooms[room]) {
+            callback(404);
+        }
 
         socket.join(room);
         socket.room = room;
         socket.broadcast.to(socket.room).emit('cmd', {
-            action: 'join',
+            action: 'set',
             type: 'user',
-            id: socket.id
+            id: socket.id,
+            data: {
+                connected: true
+            }
         });
 
-        if (callback) {
-            callback(room);
-        }
+        callback(200, room);
     });
 
     /**
      *
      */
-    socket.on('leave', function(room) {
-        console.log("socket.io | user (" + socket.id + ") - leave: " + room);
+    socket.on('leave', function(callback) {
+        console.log("socket.io | user (" + socket.id + ") - leave");
 
-        socket.leave(room);
-        socket.broadcast.to(room).emit('cmd', {
-            action: 'leave',
+        socket.leave(socket.room);
+        socket.broadcast.to(socket.room).emit('cmd', {
+            action: 'set',
             type: 'user',
-            id: socket.id
+            id: socket.id,
+            data: null
         });
+
+        if (!io.sockets.adapter.rooms[socket.room]) {
+            delete io.sockets.adapter.settings[socket.room];
+        }
         delete socket.room;
+
+        callback(200);
     });
 
     /**
@@ -92,10 +125,15 @@ io.on('connection', function(socket) {
 
         socket.leave(socket.room);
         socket.broadcast.to(socket.room).emit('cmd', {
-            action: 'disconnect',
+            action: 'set',
             type: 'user',
-            id: socket.id
+            id: socket.id,
+            data: null
         });
+
+        if (!io.sockets.adapter.rooms[socket.room]) {
+            delete io.sockets.adapter.settings[socket.room];
+        }
         delete socket.room;
     });
 
