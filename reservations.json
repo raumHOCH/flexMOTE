@@ -1,0 +1,10 @@
+{
+    "00000": {
+        "app": "admin",
+        "secret": ""
+    },
+    "12345": {
+        "app": "hello-world",
+        "secret": "mysecret"
+    }
+}
