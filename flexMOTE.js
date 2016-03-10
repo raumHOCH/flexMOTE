@@ -58,7 +58,7 @@ var cronJob = function() {
         if (!setting) {
             DEBUG && console.log(" > wrong room!", client.id);
             client.disconnect();
-            return;
+            continue;
         }
 
         // if client is not an app & this room has a timeout
@@ -69,7 +69,7 @@ var cronJob = function() {
             if (duration > setting.timeout) {
                 DEBUG && console.log(" > inactivity!", client.id, duration, "ms");
                 client.disconnect();
-                return;
+                continue;
             }
         }
 
