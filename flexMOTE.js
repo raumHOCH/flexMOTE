@@ -27,19 +27,54 @@ var DEBUG = false;
  * @param {Object} socket
  */
 var leaveRoom = function(socket) {
-    socket.leave(socket.room);
     socket.broadcast.to(socket.room).emit('cmd', {
         action: 'set',
         type: 'user',
         id: socket.id,
         data: null
     });
+    socket.leave(socket.room);
 
     // remove additional data/settings
     if (!io.sockets.adapter.rooms[socket.room]) {
         delete settings[socket.room];
     }
     delete socket.room;
+};
+
+/**
+ * runs every 5 seconds to remove old clients and ping all remaining clients
+ * to get their latency.
+ */
+var cronJob = function() {
+    DEBUG && console.log('flexMOTE | cronJob');
+
+    // remove inactive clients
+    for (var id in io.sockets.sockets) {
+        var client = io.sockets.sockets[id];
+        var setting = settings[client.room];
+
+        // client is connected to an old/not existing room
+        if (!setting) {
+            DEBUG && console.log(" > wrong room!", client.id);
+            client.disconnect();
+            return;
+        }
+
+        // if client is not an app & this room has a timeout
+        if (!client.isApp && setting.timeout > 0) {
+
+            // we should disconnect all clients w/ inactivity
+            var duration = ((new Date()).getTime() - client.lastUpdate);
+            if (duration > setting.timeout) {
+                DEBUG && console.log(" > inactivity!", client.id, duration, "ms");
+                client.disconnect();
+                return;
+            }
+        }
+
+        // :TODO: implement "ping" and save client's latency
+    }
 };
 
 // ----- public methods --------------------------------------------------------
@@ -52,6 +87,7 @@ var leaveRoom = function(socket) {
 module.exports.init = function(_io, _DEBUG) {
     io = _io;
     DEBUG = _DEBUG;
+    setInterval(cronJob, 5000);
 };
 
 // ----- socket event handlers -------------------------------------------------
@@ -71,6 +107,8 @@ module.exports.onCommand = function(params, callback) {
     else {
         this.broadcast.to(this.room).emit('cmd', params);
     }
+
+    this.lastUpdate = (new Date()).getTime();
 
     // fire callback (if any)
     if (callback) {
@@ -126,6 +164,12 @@ module.exports.onRegister = function(setting, callback) {
     DEBUG && console.log('flexMOTE | onRegister', this.id, setting);
     this.join(room);
     this.room = room;
+    this.isApp = true;
+
+    // set some defaults for optional settings
+    setting.timeout = setting.timeout || 0;
+    setting.maxUsers = setting.maxUsers || -1;
+    setting.stickySessions = setting.stickySessions || false;
 
     // save the settings in separate place,
     // don't mess up the socket.io room management
@@ -148,11 +192,21 @@ module.exports.onJoin = function(room, callback) {
     // creating a new room on the fly is not allowed!
     if (!room || !io.sockets.adapter.rooms[room]) {
         callback(404);
+        return;
+    }
+
+    // check if the room is "full"
+    // first user is the app, which has registered the room
+    var userCount = Object.keys(io.sockets.adapter.rooms[room]).length - 1;
+    if (settings[room].maxUsers > 0 && settings[room].maxUsers <= userCount) {
+        callback(429);
+        return;
     }
 
     // as the client part is always public, we can connect w/o further checks
     this.join(room);
     this.room = room;
+    this.lastUpdate = (new Date()).getTime();
     this.broadcast.to(this.room).emit('cmd', {
         action: 'set',
         type: 'user',
@@ -173,8 +227,8 @@ module.exports.onJoin = function(room, callback) {
  */
 module.exports.onLeave = function(callback) {
     DEBUG && console.log('flexMOTE | onLeave', this.id);
-    leaveRoom(this);
     callback(200);
+    this.disconnect();
 };
 
 /**

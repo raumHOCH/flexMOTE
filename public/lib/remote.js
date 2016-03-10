@@ -98,7 +98,8 @@
      *    maxUsers: -1, // -1 = unlimited
      *    timeout: 5000,
      *    stickySession: false,
-     *    secret: 'your-api-key'
+     *    room: '12345', // a reserved room
+     *    secret: 'your-api-key' // password for reserved room
      * }
      *
      * @param {Object} settings
@@ -141,10 +142,10 @@
      */
     Remote.leave = function(callback) {
         Remote.DEBUG && console.log('remote | leave');
-        Remote.connection.emit('leave', room, function(status, room) {
-            Remote.DEBUG && console.log(' >', status, room);
+        Remote.connection.emit('leave', function(status) {
+            Remote.DEBUG && console.log(' >', status);
             if (callback) {
-                callback(room);
+                callback();
             }
         });
     };
@@ -167,6 +168,11 @@
      */
     Remote.onDisconnect = function() {
         Remote.DEBUG && console.log('remote | disconnected');
+
+        // :TODO: refactoring! This should be part of remote-ui.js
+        if (Remote.UI) {
+            Remote.UI.unloadLayout();
+        }
     };
 
     // window

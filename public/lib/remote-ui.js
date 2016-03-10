@@ -167,10 +167,8 @@
         out += '</table>';
 
         // rebuild gui and event handlers
-        $('#remote td>*').off('mousedown touchstart', UI.onElementPressed);
-        $('#remote td>*').off('mouseup touchend', UI.onElementReleased);
-
-        $('#remote').empty().html(out);
+        UI.unloadLayout();
+        $('#remote').html(out);
         $('#remote table').css('width', (layout.data.cols * layout.data.gridSize) + "px");
 
         $('#remote td>*').on('mousedown touchstart', UI.onElementPressed);
@@ -178,6 +176,16 @@
 
         // scale to fit
         UI.onResize();
+    };
+
+    /**
+     *
+     */
+    UI.unloadLayout = function() {
+        Remote.DEBUG && console.log('remote ui | unload layout');
+        $('#remote td>*').off('mousedown touchstart', UI.onElementPressed);
+        $('#remote td>*').off('mouseup touchend', UI.onElementReleased);
+        $('#remote').empty();
     };
 
     /**
