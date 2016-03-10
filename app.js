@@ -106,7 +106,11 @@ io.on('connection', function(socket) {
     });
 
     /**
-     * join a room, if no room specified create one
+     * join an existing room. If the given room is not active,
+     * this call will fail (status: 404).
+     *
+     * @param {String} room
+     * @param {Function} callback
      */
     socket.on('join', function(room, callback) {
         DEBUG && console.log("socket.io | user (" + socket.id + ") - join: " + room);
@@ -165,6 +169,7 @@ io.on('connection', function(socket) {
     socket.on('disconnect', function() {
         DEBUG && console.log('socket.io | user disconnected:', socket.id, socket.room);
 
+        // remove disconnected client from room
         socket.leave(socket.room);
         socket.broadcast.to(socket.room).emit('cmd', {
             action: 'set',
@@ -173,6 +178,7 @@ io.on('connection', function(socket) {
             data: null
         });
 
+        // delete further data/settings
         if (!io.sockets.adapter.rooms[socket.room]) {
             delete io.sockets.adapter.settings[socket.room];
         }
