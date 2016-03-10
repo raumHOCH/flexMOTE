@@ -20,16 +20,16 @@ app.use(express.static(__dirname + '/public'));
 io.sockets.adapter.settings = {};
 
 /**
- * @TODO implement channels / rooms / namespaces
  * @param {Object} socket
  */
 io.on('connection', function(socket) {
     DEBUG && console.log('socket.io | connected:', socket.id);
 
-    // some event handlers
     /**
-     * handle incoming messages
+     * handle incoming <cmd> message, actually forwarding to the right receiver(s)
+     *
      * @param {Object} params
+     * @param {Function} callback
      */
     socket.on('cmd', function(params, callback) {
         DEBUG && console.log("socket.io | cmd:", socket.id, params.target);
@@ -49,9 +49,12 @@ io.on('connection', function(socket) {
     });
 
     /**
+     * ping message to measure latency
+     *
      * @param {Function} callback
      */
     socket.on('ping', function(callback) {
+        // :TODO: should work the other way around, server triggers the ping...
         DEBUG && console.log("socket.io | ping (" + socket.id + ")");
         if (callback) {
             callback();
@@ -60,6 +63,9 @@ io.on('connection', function(socket) {
 
     /**
      * register a room
+     *
+     * @param {Object} settings
+     * @param {Function} callback
      */
     socket.on('register', function(settings, callback) {
         var room = null;
@@ -91,9 +97,11 @@ io.on('connection', function(socket) {
         socket.join(room);
         socket.room = room;
 
+        // save the settings in separate place,
+        // don't mess up the socket.io room management
         io.sockets.adapter.settings[room] = settings;
 
-        DEBUG && console.log(io.sockets.adapter);
+        // everything is fine, send success message to client
         callback(200, room);
     });
 
@@ -103,10 +111,12 @@ io.on('connection', function(socket) {
     socket.on('join', function(room, callback) {
         DEBUG && console.log("socket.io | user (" + socket.id + ") - join: " + room);
 
+        // creating a new room on the fly is not allowed!
         if (!room || !io.sockets.adapter.rooms[room]) {
             callback(404);
         }
 
+        // as the client part is always public, we can connect w/o further checks
         socket.join(room);
         socket.room = room;
         socket.broadcast.to(socket.room).emit('cmd', {
@@ -118,15 +128,19 @@ io.on('connection', function(socket) {
             }
         });
 
+        // send success message
         callback(200, room);
     });
 
     /**
+     * client leave a room
      *
+     * @param {Function} callback
      */
     socket.on('leave', function(callback) {
         DEBUG && console.log("socket.io | user (" + socket.id + ") - leave");
 
+        // remove from room
         socket.leave(socket.room);
         socket.broadcast.to(socket.room).emit('cmd', {
             action: 'set',
@@ -135,11 +149,13 @@ io.on('connection', function(socket) {
             data: null
         });
 
+        // remove additional data/settings
         if (!io.sockets.adapter.rooms[socket.room]) {
             delete io.sockets.adapter.settings[socket.room];
         }
         delete socket.room;
 
+        // return success message
         callback(200);
     });
 
