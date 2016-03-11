@@ -237,6 +237,4 @@ module.exports.onLeave = function(callback) {
 module.exports.onDisconnect = function() {
     DEBUG && console.log('flexMOTE | onDisconnect', this.id, this.room);
     leaveRoom(this);
-    DEBUG && console.log(settings);
-    DEBUG && console.log(io.sockets.adapter.rooms);
 };

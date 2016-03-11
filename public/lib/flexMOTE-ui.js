@@ -2,23 +2,23 @@
     "use strict";
 
     // ----- dependencies ------------------------------------------------------
-    if (!window.Remote) {
-        throw Error("requires remote.js!");
+    if (!window.flexMOTE) {
+        throw Error("requires flexMOTE.js!");
     }
 
     // ----- remote ui ---------------------------------------------------------
     /**
      *
      */
-    var Remote = window.Remote;
-    var UI = Remote.UI = {};
+    var flexMOTE = window.flexMOTE;
+    var UI = flexMOTE.UI = {};
     UI.layouts = {};
     UI.skins = {};
     UI.currentLayout = '';
     UI.currentSkin = '';
     UI.allowedProperties = ["id", "cssClass", "action", "url", "label", "content", "state"];
 
-    // ----- remote ui components -----------------------------------------------------
+    // ----- remote ui components ----------------------------------------------
     /**
      * allowed states
      */
@@ -101,7 +101,7 @@
      *
      */
     UI.buildLayout = function(layout) {
-        Remote.DEBUG && console.log('remote ui | buildLayout: ' + layout.id);
+        console.log('buildLayout', layout.id);
 
         var l = UI.layouts[layout.id] || {};
         layout = $.extend(l, layout);
@@ -182,7 +182,7 @@
      *
      */
     UI.unloadLayout = function() {
-        Remote.DEBUG && console.log('remote ui | unload layout');
+        console.log('unload layout');
         $('#remote td>*').off('mousedown touchstart', UI.onElementPressed);
         $('#remote td>*').off('mouseup touchend', UI.onElementReleased);
         $('#remote').empty();
@@ -192,7 +192,7 @@
      * @param {Object} skin
      */
     UI.loadSkin = function(skin) {
-        Remote.DEBUG && console.log('remote ui | load skin:', skin.id);
+        console.log('load skin:', skin.id);
 
         // merge settings
         var s = UI.skins[skin.id] || {};
@@ -214,7 +214,7 @@
 
         // load css file if needed
         if (stylesheetChanged) {
-            Remote.DEBUG && console.log('remote ui | load css: ' + skin.data.url);
+            console.log('load css', skin.data.url);
 
             var e = document.createElement('link');
             e.id = "skin-loader";
@@ -222,7 +222,7 @@
             e.type = "text/css";
             e.href = skin.data.url;
             e.onload = function() {
-                Remote.DEBUG && console.log('remote ui | css loaded');
+                console.log('css loaded');
             };
 
             $('head').append(e);
@@ -235,7 +235,7 @@
      *
      */
     UI.unloadSkin = function(removeStylesheet) {
-        Remote.DEBUG && console.log('remote ui | unloadSkin');
+        console.log('unloadSkin');
         UI.currentSkin = null;
 
         if (removeStylesheet) {
@@ -249,7 +249,7 @@
      *
      */
     UI.onResize = function() {
-        Remote.DEBUG && console.log('remote ui | resize');
+        console.log('resize');
 
         // calculate scale & top
         var l = UI.layouts[UI.currentLayout];
@@ -286,10 +286,10 @@
      * @param {Object} event
      */
     UI.onElementPressed = function(event) {
-        Remote.DEBUG && console.log('remote ui | element pressed', event.currentTarget);
+        console.log('element pressed', event.currentTarget);
 
         if (event.currentTarget.id) {
-            Remote.sendCommand('*', {
+            flexMOTE.sendCommand('*', {
                 action: 'set',
                 type: 'button',
                 id: event.currentTarget.id,
@@ -304,10 +304,10 @@
      * @param {Object} event
      */
     UI.onElementReleased = function(event) {
-        Remote.DEBUG && console.log('remote ui | element released', event.currentTarget);
+        console.log('element released', event.currentTarget);
 
         if (event.currentTarget.id) {
-            Remote.sendCommand('*', {
+            flexMOTE.sendCommand('*', {
                 action: 'set',
                 type: 'button',
                 id: event.currentTarget.id,
