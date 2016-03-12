@@ -1,7 +1,7 @@
 {
     "00000": {
         "app": "admin",
-        "secret": ""
+        "secret": "myadminsecret"
     },
     "12345": {
         "app": "hello-world",

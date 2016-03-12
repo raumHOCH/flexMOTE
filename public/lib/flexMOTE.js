@@ -73,6 +73,7 @@
      */
     flexMOTE.register = function(settings, callback) {
         console.log('register', settings);
+        settings.host = location.host;
         flexMOTE.connection.emit('register', settings, function(status, room) {
             console.log(' >', status, room);
 

@@ -20,6 +20,11 @@ var settings = {};
  */
 var DEBUG = false;
 
+/**
+ *
+ */
+var os = require('os');
+
 // ----- private methods -------------------------------------------------------
 /**
  * remove the socket from it's current room and cleanup data/settings
@@ -79,7 +84,7 @@ var cronJob = function() {
 
 // ----- public methods --------------------------------------------------------
 /**
- * initialize the module w/ reference to socket.io and DEBUG settings
+ * initialize the module w/ reference to socket.io and debug settings
  *
  * @param {Object} _io
  * @param {Boolean} _DEBUG
@@ -190,7 +195,8 @@ module.exports.onJoin = function(room, callback) {
     DEBUG && console.log('flexMOTE | onJoin', this.id, room);
 
     // creating a new room on the fly is not allowed!
-    if (!room || !io.sockets.adapter.rooms[room]) {
+    // also admin room can only accessed using "register" events
+    if (!room || room == '00000' || !io.sockets.adapter.rooms[room]) {
         callback(404);
         return;
     }
@@ -237,4 +243,46 @@ module.exports.onLeave = function(callback) {
 module.exports.onDisconnect = function() {
     DEBUG && console.log('flexMOTE | onDisconnect', this.id, this.room);
     leaveRoom(this);
+};
+
+// ----- admin events ----------------------------------------------------------
+/**
+ * @param {Function} callback
+ */
+module.exports.onStatistics = function(callback) {
+    DEBUG && console.log('flexMOTE | onStatistics');
+
+    // only admins are allowed
+    if (this.room != '00000') {
+        callback(403);
+        return;
+    }
+
+    var report = {};
+
+    // some stats about the computer
+    report.cpuLoad = parseInt(os.loadavg()[0] / os.cpus().length * 100);
+    report.memory = {};
+    report.memory.free = os.freemem();
+    report.memory.total = os.totalmem();
+
+    // stats about users & rooms
+    report.appCount = Object.keys(settings).length - 1;
+    report.userCount = (io.sockets.sockets.length - 1) - report.appCount;
+
+    // details
+    report.rooms = [];
+    for (var id in settings) {
+        if (id != '00000') {
+            var room = settings[id];
+            report.rooms.push({
+                app: room.app,
+                id: id,
+                userCount: Object.keys(io.sockets.adapter.rooms[id]).length - 1,
+                host: room.host
+            });
+        }
+    }
+
+    callback(200, report);
 };

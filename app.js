@@ -25,6 +25,7 @@ io.on('connection', function(socket) {
     socket.on('join', flexMOTE.onJoin);
     socket.on('leave', flexMOTE.onLeave);
     socket.on('disconnect', flexMOTE.onDisconnect);
+    socket.on('statistics', flexMOTE.onStatistics);
 });
 
 // ----- go! -------------------------------------------------------------------
