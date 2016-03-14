@@ -107,11 +107,11 @@
 
     // ----- remote ui error pages ---------------------------------------------
     /**
-     *
+     * error 403 - we don't have access to a channel
      */
-    UI.layouts['error-403'] = {
+    UI.layouts['flexMOTE-error-403'] = {
         type: 'layout',
-        id: 'error-403',
+        id: 'flexMOTE-error-403',
         data: {
             name: 'Error 403',
             cols: 3,
@@ -130,11 +130,11 @@
     };
 
     /**
-     *
+     * error 404 - the requested channel is not available/open
      */
-    UI.layouts['error-404'] = {
+    UI.layouts['flexMOTE-error-404'] = {
         type: 'layout',
-        id: 'error-404',
+        id: 'flexMOTE-error-404',
         data: {
             name: 'Error 404',
             cols: 3,
@@ -153,11 +153,11 @@
     };
 
     /**
-     *
+     * error 429 - the requested channel is full
      */
-    UI.layouts['error-429'] = {
+    UI.layouts['flexMOTE-error-429'] = {
         type: 'layout',
-        id: 'error-429',
+        id: 'flexMOTE-error-429',
         data: {
             name: 'Error 429',
             cols: 3,
@@ -176,11 +176,61 @@
     };
 
     /**
-     *
+     * error 503 - the last app in this channel is gone...
      */
-    UI.layouts['disconnect'] = {
+    UI.layouts['flexMOTE-error-503'] = {
         type: 'layout',
-        id: 'disconnect',
+        id: 'flexMOTE-error-503',
+        data: {
+            name: 'Error 503',
+            cols: 3,
+            rows: 3,
+            elements: [{
+                type: "Text",
+                content: "Error 503 - app lost",
+                cols: 3
+            }, {
+                cols: 3
+            }, {
+
+                cols: 3
+            }]
+        }
+    };
+
+    /**
+     * input channel code to enter (if not set in url...)
+     */
+    UI.layouts['flexMOTE-code'] = {
+        type: 'layout',
+        id: 'flexMOTE-code',
+        data: {
+            name: 'Code',
+            cols: 3,
+            rows: 3,
+            elements: [{
+                type: "Text",
+                content: "Enter Code",
+                cols: 3
+            }, {
+                cols: 3
+            }, {
+                type: "Text",
+                content: "Your Code Here",
+                cols: 2
+            }, {
+                type: "Button",
+                label: "Go"
+            }]
+        }
+    };
+
+    /**
+     * flexMOTE disconnected - show reload button
+     */
+    UI.layouts['flexMOTE-disconnect'] = {
+        type: 'layout',
+        id: 'flexMOTE-disconnect',
         data: {
             name: 'Disconnect',
             cols: 3,

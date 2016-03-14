@@ -40,6 +40,26 @@ var leaveRoom = function(socket) {
     });
     socket.leave(socket.room);
 
+    // inform all users if the last app is gone.
+    if (socket.isApp) {
+        var hasApp = false;
+        var room = io.sockets.adapter.rooms[socket.room];
+        for (var i in room) {
+            if (io.sockets.connected[i].isApp) {
+                hasApp = true;
+            }
+        }
+
+        // so... we don't have any apps left...
+        if (!hasApp) {
+            socket.broadcast.emit('cmd', {
+                action: 'set',
+                type: 'app',
+                id: null
+            });
+        }
+    }
+
     // remove additional data/settings
     if (!io.sockets.adapter.rooms[socket.room]) {
         delete settings[socket.room];

@@ -17,9 +17,14 @@ flexMOTE.connection.on('connect', function() {
             }
             else {
                 flexMOTE.UI.buildLayout({
-                    'id': 'error-' + status
+                    'id': 'flexMOTE-error-' + status
                 });
             }
+        });
+    }
+    else {
+        flexMOTE.UI.buildLayout({
+            'id': 'flexMOTE-code'
         });
     };
 });
@@ -31,7 +36,7 @@ flexMOTE.connection.on('disconnect', function() {
     console.log('disconnect');
     flexMOTE.UI.unloadSkin();
     flexMOTE.UI.buildLayout({
-        id: 'disconnect'
+        id: 'flexMOTE-disconnect'
     });
 });
 
@@ -50,6 +55,15 @@ flexMOTE.connection.on('cmd', function(cmd) {
 
                 case 'skin':
                     flexMOTE.UI.loadSkin(cmd);
+                    break;
+
+                case 'app':
+                    if (!cmd.id) {
+                        flexMOTE.UI.buildLayout({
+                            id: 'flexMOTE-error-503'
+                        });
+                        setTimeout(flexMOTE.leave, 5000);
+                    }
                     break;
             }
             break;
