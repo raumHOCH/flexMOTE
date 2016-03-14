@@ -16,7 +16,7 @@
     UI.skins = {};
     UI.currentLayout = '';
     UI.currentSkin = '';
-    UI.allowedProperties = ["id", "cssClass", "action", "url", "label", "content", "state"];
+    UI.allowedProperties = ["id", "cssClass", "action", "url", "label", "content", "state", "value", "placeholder"];
 
     // ----- remote ui components ----------------------------------------------
     /**
@@ -51,17 +51,6 @@
 
     /**
      * @see {Element}
-     * @param {String} action
-     * @param {String} label
-     */
-    UI.Button = $.extend({
-        action: '',
-        label: '',
-        markup: '<button id="{{id}}" class="button {{cssClass}} {{state}}" data-action="{{action}}">{{label}}</button>'
-    }, Element);
-
-    /**
-     * @see {Element}
      * @param {String} url
      * @param {String} label
      * @param {String} target
@@ -85,6 +74,14 @@
      * @see {Element}
      * @param {String} content
      */
+    UI.Input = $.extend({
+        markup: '<input id="{{id}}" type="text" class="input {{cssClass}} {{state}}" value="{{value}}" placeholder="{{placeholder}}" />'
+    }, Element);
+
+    /**
+     * @see {Element}
+     * @param {String} content
+     */
     // TODO: do we really want html here? Perhaps markdown is a saver solution?
     UI.HTML = $.extend({
         markup: '<div id="{{id}}" class="html {{cssClass}} {{state}}">{{{content}}}</div>'
@@ -93,16 +90,33 @@
     /**
      * @see {Element}
      */
+    UI.Debug = $.extend({
+        markup: '<div id="{{id}}" class="debug {{cssClass}} {{state}}">&nbsp;</div>'
+    }, Element);
+
+    /**
+     * @see {Element}
+     * @param {String} action
+     * @param {String} label
+     */
+    UI.Button = $.extend({
+        action: '',
+        label: '',
+        markup: '<button id="{{id}}" class="button {{cssClass}} {{state}}" data-action="{{action}}">{{label}}</button>'
+    }, Element);
+
+    /**
+     * @see {Element}
+     */
     UI.Reload = $.extend({
-        id: 'reload',
         markup: '<button id="{{id}}" class="__reload__ button {{cssClass}} {{state}}">{{label}}</button>'
     }, Element);
 
     /**
      * @see {Element}
      */
-    UI.Debug = $.extend({
-        markup: '<div id="{{id}}" class="debug {{cssClass}} {{state}}">&nbsp;</div>'
+    UI.Submit = $.extend({
+        markup: '<button id="{{id}}" class="__submit__ button {{cssClass}} {{state}}">{{label}}</button>'
     }, Element);
 
     // ----- remote ui error pages ---------------------------------------------
@@ -215,11 +229,14 @@
             }, {
                 cols: 3
             }, {
-                type: "Text",
-                content: "Your Code Here",
+                type: "Input",
+                placeholder: "Your Code Here",
+                cssClass: '__code__',
                 cols: 2
             }, {
-                type: "Button",
+                type: "Submit",
+                id: "code",
+                cssClass: '__code_submit__',
                 label: "Go"
             }]
         }
@@ -440,12 +457,28 @@
     UI.onElementPressed = function(event) {
         console.log('element pressed', event.currentTarget);
 
-        if ($(event.currentTarget).hasClass('__reload__')) {
+        // specials: reload button
+        var target = $(event.currentTarget);
+        if (target.hasClass('__reload__')) {
             location.reload();
             return;
         }
 
-        if (event.currentTarget.id) {
+        // specials: code input
+        if (target.hasClass('__code_submit__')) {
+            if ($('.input.__code__').val()) {
+                location.hash = $('.input.__code__').val();
+                location.reload();
+            }
+            else {
+                alert("Please enter a code!");
+            }
+            return;
+        }
+
+        // default behaviour
+        if (event.currentTarget.id && target.hasClass('button')) {
+            console.log(' > inform app');
             flexMOTE.sendCommand('*', {
                 action: 'set',
                 type: 'button',
