@@ -76,14 +76,9 @@
         settings.host = location.host;
         flexMOTE.connection.emit('register', settings, function(status, room) {
             console.log(' >', status, room);
-
-            if (status != 200) {
-                return alert(status);
-            }
-
             flexMOTE.room = room;
             if (callback) {
-                callback(room);
+                callback(status, room);
             }
         });
     };
@@ -97,7 +92,7 @@
             console.log(' >', status, room);
             flexMOTE.room = room;
             if (callback) {
-                callback(room);
+                callback(status, room);
             }
         });
     };
@@ -110,7 +105,7 @@
         flexMOTE.connection.emit('leave', function(status) {
             console.log(' >', status);
             if (callback) {
-                callback();
+                callback(status);
             }
         });
     };

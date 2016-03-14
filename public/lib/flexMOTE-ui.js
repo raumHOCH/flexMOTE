@@ -51,13 +51,6 @@
 
     /**
      * @see {Element}
-     */
-    UI.Debug = $.extend({
-        markup: '<div id="{{id}}" class="debug {{cssClass}} {{state}}">&nbsp;</div>'
-    }, Element);
-
-    /**
-     * @see {Element}
      * @param {String} action
      * @param {String} label
      */
@@ -92,9 +85,118 @@
      * @see {Element}
      * @param {String} content
      */
+    // TODO: do we really want html here? Perhaps markdown is a saver solution?
     UI.HTML = $.extend({
         markup: '<div id="{{id}}" class="html {{cssClass}} {{state}}">{{{content}}}</div>'
     }, Element);
+
+    /**
+     * @see {Element}
+     */
+    UI.Reload = $.extend({
+        id: 'reload',
+        markup: '<button id="{{id}}" class="__reload__ button {{cssClass}} {{state}}">{{label}}</button>'
+    }, Element);
+
+    /**
+     * @see {Element}
+     */
+    UI.Debug = $.extend({
+        markup: '<div id="{{id}}" class="debug {{cssClass}} {{state}}">&nbsp;</div>'
+    }, Element);
+
+    // ----- remote ui error pages ---------------------------------------------
+    /**
+     *
+     */
+    UI.layouts['error-403'] = {
+        type: 'layout',
+        id: 'error-403',
+        data: {
+            name: 'Error 403',
+            cols: 3,
+            rows: 3,
+            elements: [{
+                type: "Text",
+                content: "Error 403 - forbidden",
+                cols: 3
+            }, {
+                cols: 3
+            }, {
+
+                cols: 3
+            }]
+        }
+    };
+
+    /**
+     *
+     */
+    UI.layouts['error-404'] = {
+        type: 'layout',
+        id: 'error-404',
+        data: {
+            name: 'Error 404',
+            cols: 3,
+            rows: 3,
+            elements: [{
+                type: "Text",
+                content: "Error 404 - channel not found",
+                cols: 3
+            }, {
+                cols: 3
+            }, {
+
+                cols: 3
+            }]
+        }
+    };
+
+    /**
+     *
+     */
+    UI.layouts['error-429'] = {
+        type: 'layout',
+        id: 'error-429',
+        data: {
+            name: 'Error 429',
+            cols: 3,
+            rows: 3,
+            elements: [{
+                type: "Text",
+                content: "Error 429 - too many connections",
+                cols: 3
+            }, {
+                cols: 3
+            }, {
+
+                cols: 3
+            }]
+        }
+    };
+
+    /**
+     *
+     */
+    UI.layouts['disconnect'] = {
+        type: 'layout',
+        id: 'disconnect',
+        data: {
+            name: 'Disconnect',
+            cols: 3,
+            rows: 3,
+            elements: [{
+                type: "Text",
+                content: "Disconnected from server",
+                cols: 3
+            }, {
+                cols: 3
+            }, {}, {
+                type: "Reload",
+                label: "Reload"
+            }, {}]
+        }
+    };
 
     // ----- public methods ----------------------------------------------------
     /**
@@ -287,6 +389,11 @@
      */
     UI.onElementPressed = function(event) {
         console.log('element pressed', event.currentTarget);
+
+        if ($(event.currentTarget).hasClass('__reload__')) {
+            location.reload();
+            return;
+        }
 
         if (event.currentTarget.id) {
             flexMOTE.sendCommand('*', {

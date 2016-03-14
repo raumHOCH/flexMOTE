@@ -11,7 +11,16 @@ flexMOTE.connection.on('connect', function() {
     console.log("connected as", flexMOTE.connection.id);
     var room = location.hash.substr(1);
     if (room.length == 5) {
-        flexMOTE.join(room, flexMOTE.ping);
+        flexMOTE.join(room, function(status, room) {
+            if (status == 200) {
+                flexMOTE.ping();
+            }
+            else {
+                flexMOTE.UI.buildLayout({
+                    'id': 'error-' + status
+                });
+            }
+        });
     };
 });
 
@@ -20,8 +29,10 @@ flexMOTE.connection.on('connect', function() {
  */
 flexMOTE.connection.on('disconnect', function() {
     console.log('disconnect');
-    flexMOTE.UI.unloadLayout();
     flexMOTE.UI.unloadSkin();
+    flexMOTE.UI.buildLayout({
+        id: 'disconnect'
+    });
 });
 
 /**
