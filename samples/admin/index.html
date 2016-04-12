@@ -1,0 +1,156 @@
+<html>
+    <head>
+        <title>flexMOTE - Admin</title>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+        <link type="text/css" rel="stylesheet" href="lib/semantic.min.css" />
+        <link type="text/css" rel="stylesheet" href="css/style.css" />
+        <link rel="shortcut icon" href="favicon.png" type="image/png" />
+        <link rel="icon" href="favicon.png" type="image/png" />
+    </head>
+
+    <body class="pushable">
+
+        <!-- top navbar -->
+        <div class="ui top fixed inverted menu">
+            <div class="item">
+                <a class="ui logo icon image" href="/">
+                    <img src="favicon.png" />
+                </a>
+            </div>
+
+            <div class="item">
+                <h1>Monitoring</h1>
+            </div>
+
+            <div class="item" data-content="Monitored Server">
+                <i class="server icon"></i>
+                <div id="server-name"></div>
+            </div>
+
+            <div class="item" data-content="Connected Apps">
+                <i class="grid layout icon"></i>
+                <div id="total-apps"></div>
+            </div>
+
+            <div class="item" data-content="Connected Users">
+                <i class="users icon"></i>
+                <div id="total-users"></div>
+            </div>
+
+            <div class="item" data-content="Average Latency">
+                <i class="wait icon"></i>
+                <div id="latency"></div>
+            </div>
+
+            <div class="right menu">
+                <div class="item">
+                    Logged in as &nbsp; <strong>admin</strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- left sidebar (applications) -->
+        <div class="ui simple fixed vertical menu sidebar left">
+            <div class="item dividing">
+                <h2>Applications</h2>
+            </div>
+            <div id="rooms"></div>
+        </div><!-- .sidebar.left -->
+
+        <!-- right sidebar (options) -->
+        <div class="ui vertical sidebar right">
+            <div class="ui basic segment">
+                <h2>Hütchenspiel</h2>
+
+                <div class="ui divider"></div>
+                <h3>Application</h3>
+
+                <button class="ui red button">
+                    Stop
+                </button>
+
+                <button class="ui red button">
+                    Restart
+                </button>
+
+                <div class="ui divider"></div>
+
+                <div class="ui form">
+                    <h3>Settings</h3>
+                    <div class="fields">
+                        <div class="field">
+                            <label>Max Allowed Users</label>
+                            <input placeholder="Max Concurrent Users" type="text" value="1" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ui divider">
+
+                </div>
+
+                <div class="ui buttons">
+                    <button class="ui button">
+                        Cancel
+                    </button>
+                    <div class="or"></div>
+                    <button class="ui positive button">
+                        Save
+                    </button>
+                </div>
+            </div><!-- .tabulator.menu -->
+        </div><!-- .sidebar.right -->
+
+        <!-- content layer -->
+        <div class="pusher">
+            <div class="ui basic segment">
+
+                <!-- button row -->
+                <div class="ui secondary menu">
+                    <button class="ui positive button applications">
+                        <i class="sidebar icon"></i><span>Applications</span>
+                    </button>
+                </div><!-- .secondary.menu -->
+
+                <div class="ui divider"></div>
+
+                <!-- content -->
+                <div class="ui two column divided relaxed stackable grid">
+                    <div class="row">
+
+                        <!-- charts -->
+                        <div class="eight wide column">
+                            <div class="ui basic segment">
+                                <strong>Applications</strong>
+                                <canvas id="chart-1"></canvas>
+                                <div class="ui divider"></div>
+                                <strong>Users</strong>
+                                <canvas id="chart-2"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="eight wide column">
+                            <div class="ui basic segment">
+                                <strong>Latency</strong>
+                                <canvas id="chart-3"></canvas>
+                                <div class="ui divider"></div>
+                                <strong>CPU load</strong>
+                                <canvas id="chart-4"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- .stackable.grid -->
+            </div><!-- .basic.segment -->
+        </div><!-- .pusher -->
+
+        <script type="text/javascript" src="lib/jquery-2.1.4.min.js"></script>
+        <script type="text/javascript" src="lib/semantic.min.js"></script>
+        <script type="text/javascript" src="lib/Chart.min.js"></script>
+        <script type="text/javascript" src="lib/socket.io-1.3.5.js"></script>
+        <script type="text/javascript" src="http://remote.cloudfolio.com/lib/qrcode.min.js"></script>
+        <script type="text/javascript" src="http://remote.cloudfolio.com/lib/flexMOTE.js"></script>
+        <script type="text/javascript" src="js/app.js"></script>
+    </body>
+</html>

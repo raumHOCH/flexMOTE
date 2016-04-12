@@ -1,0 +1,20 @@
+.pusher {
+    padding: 4.5em 0 0 0;
+}
+
+.ui.secondary.menu {
+    margin: 0;
+}
+
+.ui.sidebar {
+    background: #f9fafb !important;
+    padding-top: 5.25em;
+}
+
+.ui.sidebar.menu .item {
+    cursor: pointer;
+}
+
+.ui.relaxed.grid {
+    padding: 0 2rem 0 1rem;
+}
