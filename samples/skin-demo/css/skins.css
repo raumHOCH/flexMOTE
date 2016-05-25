@@ -1,0 +1,48 @@
+/*
+ * Description: Skin for flexMOTE, loaded on remote control device
+ *              (smartphone/tablet)
+ * Application: SkinDemo
+ * Version:     0.1.0
+ * Author:      Christian David (c.david@graphscape.de)
+ */
+#skin-1 {
+    background: #369;
+    color: #000;
+}
+
+#skin-1 table {
+    background: #000;
+}
+
+#skin-1 .button {
+    color: #999;
+}
+
+#skin-1 tr:nth-child(odd) td:nth-child(odd) {
+    background: #FFF;
+}
+
+#skin-1 tr:nth-child(even) td:nth-child(even) {
+    background: #FFF;
+}
+
+#skin-2 {
+    background: #000;
+    color: #FFF;
+}
+
+#skin-2 table {
+    background: #963;
+}
+
+#skin-2 .button {
+    color: #FFF;
+}
+
+#skin-2 tr:nth-child(odd) td:nth-child(odd) {
+    background: #369;
+}
+
+#skin-2 tr:nth-child(even) td:nth-child(even) {
+    background: #369;
+}
