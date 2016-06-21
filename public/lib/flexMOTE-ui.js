@@ -16,7 +16,7 @@
     UI.skins = {};
     UI.currentLayout = '';
     UI.currentSkin = '';
-    UI.allowedProperties = ["id", "cssClass", "action", "url", "label", "content", "state", "value", "placeholder"];
+    UI.allowedProperties = ["id", "cssClass", "action", "url", "label", "content", "state", "value", "placeholder", "buttonUrl", "buttonStyle"];
 
     // ----- remote ui components ----------------------------------------------
     /**
@@ -103,6 +103,17 @@
         action: '',
         label: '',
         markup: '<button id="{{id}}" class="button {{cssClass}} {{state}}" data-action="{{action}}">{{label}}</button>'
+    }, Element);
+
+    /**
+     * @see {Element}
+     * @param {String} action
+     * @param {String} label
+     */
+    UI.ImgButton = $.extend({
+        action: '',
+        label: '',
+        markup: '<button id="{{id}}" class="img_button {{cssClass}} {{state}}" data-action="{{action}}" style="background: url({{buttonUrl}}); background-size:cover; width:100px; height:100px; {{buttonStyle}}">{{label}}</button>'
     }, Element);
 
     /**
