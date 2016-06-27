@@ -15,13 +15,13 @@ var layout = {
             type: "ImgButton",
             id: "img_button_up",
             action: "up",
-            buttonUrl: "http://localhost:3001/earth/images/arrow_double.png",
+            buttonUrl: "http://raumhoch.github.io/flexMOTE/samples/earth/images/arrow_double.png",
             buttonStyle: "transform: rotate(90deg)"
         }, {}, {
             type: "ImgButton",
             id: "img_button_left",
             action: "left",
-            buttonUrl: "http://localhost:3001/earth/images/arrow_double.png"
+            buttonUrl: "http://raumhoch.github.io/flexMOTE/samples/earth/images/arrow_double.png"
         }, {
           type: "Text",
           id: "earthText",
@@ -30,13 +30,13 @@ var layout = {
             type: "ImgButton",
             id: "img_button_right",
             action: "right",
-            buttonUrl: "http://localhost:3001/earth/images/arrow_double.png",
+            buttonUrl: "http://raumhoch.github.io/flexMOTE/samples/earth/images/arrow_double.png",
             buttonStyle: "transform: rotate(180deg)"
         }, {}, {
             type: "ImgButton",
             id: "img_button_down",
             action: "down",
-            buttonUrl: "http://localhost:3001/earth/images/arrow_double.png",
+            buttonUrl: "http://raumhoch.github.io/flexMOTE/samples/earth/images/arrow_double.png",
             buttonStyle: "transform: rotate(-90deg)"
         }, {}]
     }
