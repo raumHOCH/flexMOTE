@@ -113,7 +113,7 @@
     UI.ImgButton = $.extend({
         action: '',
         label: '',
-        markup: '<button id="{{id}}" class="img_button {{cssClass}} {{state}}" data-action="{{action}}" style="background: url({{buttonUrl}}); background-size:cover; width:100px; height:100px; {{buttonStyle}}">{{label}}</button>'
+        markup: '<button id="{{id}}" class="img_button button {{cssClass}} {{state}}" data-action="{{action}}" style="background: url({{buttonUrl}}); background-size:cover; width:100px; height:100px; {{buttonStyle}}">{{label}}</button>'
     }, Element);
 
     /**
