@@ -1,0 +1,174 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    line-height: 20px;
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+}
+
+body, html {
+  background: #1f78b2;
+  background: linear-gradient (#1f78b2, #6dbef3);
+  -webkit-background: linear-gradient (#1f78b2, #6dbef3);
+  -o-background: linear-gradient (#1f78b2, #6dbef3);
+  -moz-background: linear-gradient (#1f78b2, #6dbef3);
+}
+
+body {
+    padding: 20px;
+}
+
+h1, p {
+    padding-bottom: 20px;
+}
+
+a {
+    color: #000;
+    text-decoration: none;
+}
+
+#qrcode {
+    text-align: center;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    background: #FFF;
+    padding: 20px 20px 0 20px;
+    box-shadow: 0 0 4px #000;
+}
+
+#qrcode img {
+    padding-bottom: 20px;
+}
+
+table {
+    transform-origin: top left;
+    -o-transform-origin: top left;
+    -ms-transform-origin: top left;
+    -moz-transform-origin: top left;
+    -webkit-transform-origin: top left;
+    transform: scale3d(0.6,0.6,0.6);
+    -o-transform: scale3d(0.6,0.6,0.6);
+    -ms-transform: scale3d(0.6,0.6,0.6);
+    -moz-transform: scale3d(0.6,0.6,0.6);
+    -webkit-transform: scale3d(0.6,0.6,0.6);
+    top: 0px;
+    left: 268px;
+    width: 100%;
+    background-color: transparent;
+}
+
+tr {
+    vertical-align: top;
+}
+
+td {
+    width: 100%;
+    height: 300px;
+    padding-top: 10em;
+    padding-left: 1em;
+}
+
+.spacer, .button, .link, .text, .html {
+    width: 800px;
+    height: 100%;
+    line-height: 100px;
+    text-align: center;
+    border: 0;
+    background: none;
+    color: #FFF;
+    display: block;
+}
+
+.button {
+    cursor: pointer;
+    font-size: 140px;
+    font-weight: 800;
+    background-color: #000;
+    margin: 0 auto;
+}
+
+.button.active {
+  background-color: #777;
+  -moz-box-shadow:    inset 0 0 30px #333;
+   -webkit-box-shadow: inset 0 0 30px #333;
+   box-shadow:         inset 0 0 30px #333;
+}
+
+.html {
+    width: auto;
+    text-align: left;
+    line-height: 1.4em;
+    overflow: auto;
+}
+
+.html p {
+    padding: 10px;
+}
+
+@media screen and (max-width: 1000px) {
+
+  .button {
+    width: 500px;
+    font-size: 80px;
+    font-weight: 600;
+  }
+
+  td {
+    height: 200px;
+    padding-top: 5em;
+    padding-left: 3em;
+  }
+
+}
+
+@media screen and (max-width: 800px) {
+  #qrcode, #qrcode img, table {
+    position: relative;
+    width: 200px;
+    display: block;
+  }
+
+  #qrcode, table {
+    margin: 0 auto;
+    left: 0;
+  }
+
+  table {
+    width: 300px;
+  }
+
+  .button {
+    position: relative;
+    margin: 0 auto;
+  }
+
+  #board {
+    height: 600px;
+  }
+
+  td {
+    height: 200px;
+    padding-top: 3em;
+    padding-left: 0;
+  }
+
+}
+
+@media screen and (max-width: 300px) {
+  #qrcode, #qrcode img, table {
+    width: 150px;
+  }
+
+  td {
+    height: 150px;
+    padding-top: 2em;
+  }
+
+  .button {
+    width: 300px;
+    font-size: 50px;
+    font-weight: 600;
+  }
+}

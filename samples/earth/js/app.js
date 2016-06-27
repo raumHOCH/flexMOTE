@@ -12,26 +12,32 @@ var layout = {
         rows: 3,
         elements: [{
         }, {
-            type: "Button",
-            id: "up",
+            type: "ImgButton",
+            id: "img_button_up",
             action: "up",
-            label: "^"
+            buttonUrl: "http://localhost:3001/earth/images/arrow_double.png",
+            buttonStyle: "transform: rotate(90deg)"
         }, {}, {
-            type: "Button",
-            id: "left",
+            type: "ImgButton",
+            id: "img_button_left",
             action: "left",
-            label: "<"
-        }, {}, {
-            type: "Button",
-            id: "right",
+            buttonUrl: "http://localhost:3001/earth/images/arrow_double.png"
+        }, {
+          type: "Text",
+          id: "earthText",
+          content: "Click to Move"
+        }, {
+            type: "ImgButton",
+            id: "img_button_right",
             action: "right",
-            label: ">"
-        }, {
-        }, {
-            type: "Button",
-            id: "down",
+            buttonUrl: "http://localhost:3001/earth/images/arrow_double.png",
+            buttonStyle: "transform: rotate(180deg)"
+        }, {}, {
+            type: "ImgButton",
+            id: "img_button_down",
             action: "down",
-            label: "v"
+            buttonUrl: "http://localhost:3001/earth/images/arrow_double.png",
+            buttonStyle: "transform: rotate(-90deg)"
         }, {}]
     }
 };
@@ -82,22 +88,26 @@ flexMOTE.connection.on('disconnect', function() {
  * @param {Object} cmd
  */
 flexMOTE.connection.on('cmd', function(cmd) {
+    console.log(cmd.id, cmd.type );
     switch (cmd.type) {
         case 'button':
             if (cmd.data.state == 'pressed') {
                 switch (cmd.id) {
-                    case 'down':
+                    case 'img_button_down':
                         window.mouse.y += 0.05;
                         break;
-                    case 'up':
+                    case 'img_button_up':
                         window.mouse.y -= 0.05;
                         break;
-                    case 'left':
+                    case 'img_button_left':
                         window.mouse.x += 0.05;
                         break;
-                    case 'right':
+                    case 'img_button_right':
                         window.mouse.x -= 0.05;
                         break;
+                    //case 'slider_x':
+                    //    window.mouse.x = cmd.value;
+                    //    break;
                 }
             }
 

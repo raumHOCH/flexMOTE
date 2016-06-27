@@ -69,16 +69,16 @@ flexMOTE.connection.on('cmd', function(cmd) {
                         data: {
                             name: 'Layout 1',
                             cols: 1,
-                            rows: 3,
-                            elements: [{
+                            rows: 4,
+                            elements: [{},{
                                 type: "Button",
                                 label: "+",
                                 id: "plus",
-                            }, {}, {
+                            }, {
                                 type: "Button",
-                                label: "-",
+                                label: "–",
                                 id: "minus",
-                            }]
+                            }, {}]
                         }
                     });
                     break;

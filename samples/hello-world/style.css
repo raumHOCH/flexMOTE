@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     border: 0;
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 }
 
 body {
@@ -30,4 +31,31 @@ a {
 
 #qrcode img {
     padding-bottom: 20px;
+}
+
+
+@media screen and (max-width: 800px) {
+
+  body {
+    padding: 20px;
+  }
+
+  #qrcode, #qrcode img {
+    position: relative;
+    width: 200px;
+  }
+
+  #qrcode {
+    margin: 20px;
+  }
+
+  p, h1 {
+    padding-top: 20px;
+    padding-bottom: 0;
+  }
+
+  #qrcode>p {
+    padding-bottom: 20px;
+    padding-top: 0;
+  }
 }

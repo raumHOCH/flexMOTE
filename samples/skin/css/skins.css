@@ -1,0 +1,57 @@
+/*
+ * Description: Skin for flexMOTE, loaded on remote control device
+ *              (smartphone/tablet)
+ * Application: Skin
+ * Version:     0.1.0
+ * Author:      Jule Desel
+ */
+
+
+/* general remote settings */
+#remote {
+  background: #1f78b2;
+  background: linear-gradient (#1f78b2, #6dbef3);
+  -webkit-background: linear-gradient (#1f78b2, #6dbef3);
+  -o-background: linear-gradient (#1f78b2, #6dbef3);
+  -moz-background: linear-gradient (#1f78b2, #6dbef3);
+  min-height: 100%;
+}
+
+#remote .text {
+  color: #FFF;
+}
+
+#remote #eyes {
+  font-size: 100px;
+  transform: rotate(-90deg);
+  margin-left: 6px;
+}
+
+#remote #eyes:before {
+    content: ':';
+}
+
+#remote #mouth {
+  font-size: 80px;
+  transform: none;
+  transform: rotate(90deg);
+  margin-left: -16px;
+}
+
+/* different skin settings */
+#skin-1 #mouth,
+#skin-3 #mouth {
+  transform: rotate(-90deg);
+  margin-left: 10px;
+  margin-top: -45px;
+}
+
+#skin-2 #mouth {
+  transform: rotate(90deg);
+  margin-left: -23px;
+  margin-top: -48px;
+}
+
+#skin-3 #eyes:before {
+  content: ';';
+}
