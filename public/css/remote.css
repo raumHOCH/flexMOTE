@@ -7,6 +7,12 @@
     text-transform: uppercase;
 }
 
+/* disable grey highlight for mobile safari browsers */
+a:link {
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-user-select: none;
+}
+
 body, html, div#remote, table {
     position: absolute;
     top: 0;
