@@ -156,8 +156,19 @@ td {
 
 }
 
+@media screen and (max-width: 340px) {
+  table {
+    width: 238px;
+  }
+
+  .button {
+    width: 400px;
+    text-align: center;
+  }
+}
+
 @media screen and (max-width: 300px) {
-  #qrcode, #qrcode img, table {
+  #qrcode, #qrcode img {
     width: 150px;
   }
 
@@ -167,7 +178,6 @@ td {
   }
 
   .button {
-    width: 300px;
     font-size: 50px;
     font-weight: 600;
   }
