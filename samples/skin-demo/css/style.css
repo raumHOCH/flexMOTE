@@ -4,6 +4,11 @@
     font-size: 16px;
     line-height: 20px;
     font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 body, html {
