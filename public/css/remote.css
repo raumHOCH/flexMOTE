@@ -8,7 +8,7 @@
 }
 
 /* disable grey highlight for mobile safari browsers */
-a:link {
+a:link, .text {
   -webkit-tap-highlight-color: rgba(0,0,0,0);
   -webkit-user-select: none;
 }
@@ -17,7 +17,6 @@ body, html, div#remote, table {
     position: absolute;
     top: 0;
     left: 0;
-    width: auto;
     width: 100%;
 }
 
@@ -48,8 +47,8 @@ td {
 
 .spacer, .button, .link, .text, .html, .debug, .input {
     width: 100%;
-    height: 100%;
-    line-height: 50px;
+    height: 100px;
+    line-height: 100px;
     text-align: center;
     border: 0;
     background: none;
@@ -74,7 +73,6 @@ td {
 
 .text.default {
   text-transform: none;
-  transform: translateY(50%);
 }
 
 .button.default {
@@ -88,14 +86,14 @@ td {
   border: 1px solid #fff;
 }
 
-.__reload__ {
+.__reload__, .__confirm__ {
   font-size: 30px!important;
   background-color: #000;
   padding: 10px 30px;
   font-weight: 800;
 }
 
-.__reload__:active {
+.__reload__:active, .__confirm__:active {
   opacity: 0.4;
 }
 

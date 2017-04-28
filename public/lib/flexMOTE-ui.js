@@ -33,6 +33,7 @@
      * @param {String} cssClass
      * @param {Number} cols
      * @param {Number} rows
+     * @param {Function} onRendered, callback after layout update
      */
     var Element = {
         id: "",
@@ -128,6 +129,75 @@
      */
     UI.Submit = $.extend({
         markup: '<button id="{{id}}" class="__submit__ button {{cssClass}} {{state}}">{{label}}</button>'
+    }, Element);
+
+    /**
+     * @see {Element}
+     * @param {String} content
+     */
+    UI.Audio = $.extend({
+        url: '',
+        state: 'initialize',
+        markup: '<div id="{{id}}" class="text {{cssClass}} {{state}}">{{content}}</div>',
+        onRendered: function() {
+            console.log("AUDIO RENDERED!");
+
+            // on first time, we have to initilaize an audio element and
+            // let the user trigger the play() event. This is mandatory as
+            // all mobile browsers only start audio playback after user
+            // interaction
+            if (!$('audio').length || !$('body').hasClass('audio-confirmed')) {
+                $('body').append($('<audio preload />'));
+                var audio = $('audio')[0];
+                audio.src = this.url;
+                audio.currentTime = this.value || 0;
+
+                var elem = $("#" + this.id);
+                var parent = elem.parent();
+                parent.empty();
+                elem = $('<button class="__confirm__ button">TAP TO START</button>');
+                elem.on('mousedown touchstart', function(event) {
+                    if (audio.src) {
+                        audio.play();
+                        audio.pause();
+                        $('body').addClass('audio-confirmed');
+                        setTimeout(function() {
+                            elem.remove();
+                            parent.html('<div class="text">Seeking...</div>');
+                        }, 99);
+                    }
+                });
+                parent.append(elem);
+            }
+            else {
+                // audio is initialized, so playback
+                var audio = $('audio')[0];
+
+                if (audio.src != this.url) {
+                    audio.src = this.url;
+                }
+
+                // TODO: latency compensation
+                var latency = 0.1;
+                if (Math.abs(audio.currentTime - this.value) > 0.1) {
+                    audio.currentTime = this.value + latency;
+                }
+
+                if (audio.duration <= this.value) {
+                    audio.pause();
+                }
+                else {
+                    switch (this.state) {
+                        case 'playing':
+                            audio.play();
+                            break;
+                        case 'paused':
+                            audio.pause();
+                            break;
+                    }
+                }
+            }
+        }
     }, Element);
 
     // ----- remote ui error pages ---------------------------------------------
@@ -283,6 +353,8 @@
     UI.buildLayout = function(layout) {
         console.log('buildLayout', layout.id);
 
+        var configs = [];
+
         var l = UI.layouts[layout.id] || {};
         layout = $.extend(l, layout);
         layout.id = layout.id.toString();
@@ -343,6 +415,8 @@
                 col = 0;
                 out += '</tr>';
             }
+
+            configs.push(cfg);
         }
         out += '</table>';
 
@@ -353,6 +427,13 @@
 
         $('#remote td>*').on('mousedown touchstart', UI.onElementPressed);
         $('#remote td>*').on('mouseup touchend', UI.onElementReleased);
+
+        // call onRendered hook on all elements (if defined...)
+        for (var idx = 0; idx < configs.length; idx++) {
+            if (!!configs[idx].onRendered) {
+                configs[idx].onRendered();
+            };
+        }
 
         // scale to fit
         UI.onResize();
