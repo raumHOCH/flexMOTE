@@ -548,7 +548,7 @@
      */
     UI.onElementPressed = function(event) {
         console.log('element pressed', event.currentTarget);
-		event.preventDefault();
+//		event.preventDefault();
         // specials: reload button
         var target = $(event.currentTarget);
         if (target.hasClass('__reload__')) {
