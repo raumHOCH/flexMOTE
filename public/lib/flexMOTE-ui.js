@@ -548,9 +548,6 @@
      */
     UI.onElementPressed = function(event) {
         console.log('element pressed', event.currentTarget);
-//        if (target.hasClass('button')) {
-//        	event.preventDefault();
-//        }
 //		
         // specials: reload button
         var target = $(event.currentTarget);
@@ -584,7 +581,9 @@
             });
         }
         
-        event.preventDefault();
+        if (target.hasClass('button')) {
+        	event.preventDefault();
+        }
     };
 
     /**
