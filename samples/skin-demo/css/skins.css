@@ -46,9 +46,17 @@
   margin-top: -45px;
 }
 
+#skin-2 #remote{
+	background: lightseagreen;
+}
+
+#skin-3 #remote{
+	background: lightsalmon;
+}
+
 #skin-2 #mouth {
   transform: rotate(90deg);
-  margin-left: -23px;
+  margin-left: 25px;
   margin-top: -48px;
 }
 
