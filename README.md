@@ -2,9 +2,6 @@
 
 flexMOTE.js is a framework for providing instant remote control for virtual or physical applications. Remote interfaces are accessible through any mobile browser (BYOD).
 
-## Examples
-Find a [Hello World example](http://raumhoch.github.io/flexMOTE/samples/hello-world/index.html) and a [remote website control example](http://raumhoch.github.io/flexMOTE/samples/earth/index.html). Here is a "Read-only" demo of the [admin panel](http://raumhoch.github.io/flexMOTE/samples/admin/index.html).
-
 ## Use cases
 **Control web-based services**
 - Games

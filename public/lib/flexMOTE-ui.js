@@ -580,6 +580,10 @@
                 }
             });
         }
+        
+        if (target.hasClass('button')) {
+        	event.preventDefault();
+        }
     };
 
     /**
