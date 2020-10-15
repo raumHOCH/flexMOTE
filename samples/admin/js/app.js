@@ -2,7 +2,7 @@
 /**
  * @public socket.io connection
  */
-flexMOTE.connection = io('http://remote.cloudfolio.com');
+flexMOTE.connection = io('https://remote.cloudfolio.com');
 
 /**
  * onConnect event handler

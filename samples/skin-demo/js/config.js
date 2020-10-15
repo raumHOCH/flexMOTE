@@ -14,7 +14,7 @@ Config.skins['skin-1'] = {
     type: 'skin',
     id: 'skin-1',
     data: {
-        url: 'http://raumhoch.github.io/flexMOTE/samples/skin-demo/css/skins.css'
+        url: 'https://raumhoch.github.io/flexMOTE/samples/skin-demo/css/skins.css'
     }
 };
 
@@ -26,7 +26,7 @@ Config.skins['skin-2'] = {
     type: 'skin',
     id: 'skin-2',
     data: {
-        url: 'http://raumhoch.github.io/flexMOTE/samples/skin-demo/css/skins.css'
+        url: 'https://raumhoch.github.io/flexMOTE/samples/skin-demo/css/skins.css'
     }
 };
 
@@ -38,7 +38,7 @@ Config.skins['skin-3'] = {
     type: 'skin',
     id: 'skin-3',
     data: {
-        url: 'http://raumhoch.github.io/flexMOTE/samples/skin-demo/css/skins.css'
+        url: 'https://raumhoch.github.io/flexMOTE/samples/skin-demo/css/skins.css'
     }
 };
 
