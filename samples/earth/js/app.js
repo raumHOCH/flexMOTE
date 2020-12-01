@@ -46,7 +46,7 @@ var layout = {
 /**
  * @public socket.io connection
  */
-flexMOTE.connection = io('https://remote.cloudfolio.com');
+flexMOTE.connection = io('https://flexmote.youniverse.digital');
 
 /**
  * onConnect event handler
@@ -64,7 +64,7 @@ flexMOTE.connection.on('connect', function() {
 
         $('body').append('<div id="qrcode" style="text-align:center;position:absolute;top:20px;left:20px;z-index:1000;background:#FFF;padding:20px"></div>');
         var qrcode = new QRCode("qrcode", {
-            text: "https://remote.cloudfolio.com/#" + room.toString(),
+            text: "https://flexmote.youniverse.digital/#" + room.toString(),
             width: 256,
             height: 256,
             colorDark: "#000000",
@@ -72,7 +72,7 @@ flexMOTE.connection.on('connect', function() {
             correctLevel: QRCode.CorrectLevel.H
         });
 
-        $('#qrcode').append('<p><a target="_blank" style="color:#000;text-decoration:none" href="https://remote.cloudfolio.com/#' + room + '">remote.cloudfolio.com<br/>#<strong>' + room + '</strong></a></p>');
+        $('#qrcode').append('<p><a target="_blank" style="color:#000;text-decoration:none" href="https://flexmote.youniverse.digital/#' + room + '">flexmote.youniverse.digital<br/>#<strong>' + room + '</strong></a></p>');
     });
 });
 
