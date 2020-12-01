@@ -2,6 +2,7 @@
 .project
 .settings
 .esproj
+.idea
 __MACOSX
 !.gitkeep
 !.empty
