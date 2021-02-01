@@ -2,6 +2,7 @@ version: "2.0"
 
 services:
   flexmote:
+    restart: always
     build: .
     ports:
       - "3000:3000"
