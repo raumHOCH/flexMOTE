@@ -3,7 +3,7 @@ var counter = 0;
 /**
  * @public remote connection
  */
-flexMOTE.connection = io('https://flexmote.youniverse.digital');
+flexMOTE.connection = io('https://flexmote.youspace.online');
 
 /**
  * onConnect event handler
@@ -22,7 +22,7 @@ flexMOTE.connection.on('connect', function() {
         // generate qrcode
         $('#qrcode').empty();
         var qrcode = new QRCode("qrcode", {
-            text: "https://flexmote.youniverse.digital/#" + room.toString(),
+            text: "https://flexmote.youspace.online/#" + room.toString(),
             width: 256,
             height: 256,
             colorDark: "#000000",
@@ -31,8 +31,8 @@ flexMOTE.connection.on('connect', function() {
         });
 
         // some info texts...
-        var info = '<p><a target="_blank" href="https://flexmote.youniverse.digital/#' + room + '">';
-        info += 'flexmote.youniverse.digital<br/>#<strong>' + room + '</strong></p>';
+        var info = '<p><a target="_blank" href="https://flexmote.youspace.online/#' + room + '">';
+        info += 'flexmote.youspace.online<br/>#<strong>' + room + '</strong></p>';
         $('#qrcode').append(info);
     });
 });
